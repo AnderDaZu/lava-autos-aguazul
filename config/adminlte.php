@@ -247,23 +247,34 @@ return [
         ['header' => 'PERSONAL'],
         [
             'text' => 'Administradores',
-            'url'  => 'admin/settings',
+            'route' => 'admin.administrators.index',
             'icon' => 'fas fa-fw fa-user',
+            'active' => ['admin/administrators*'],
+            'can' => 'admin.administrators.index'
         ],
         [
             'text' => 'Jefes de Patio',
             'url'  => 'admin/settings',
+            'active' => ['admin/employees*'],
             'icon' => 'fas fa-fw fa-user',
         ],
         [
             'text' => 'Lavadores',
             'url'  => 'admin/settings',
             'icon' => 'fas fa-fw fa-user',
+            'active' => ['admin/employees*'],
+        ],
+        [
+            'text' => 'Usuarios',
+            'url'  => 'admin/users',
+            'icon' => 'fas fa-fw fa-user',
+            'active' => ['admin/users*'],
         ],
         ['header' => 'AGENDAS'],
         [
             'text'       => 'Lista de Agendas',
             'icon_color' => 'yellow',
+            'active' => ['admin/agendas*'],
             'url'        => '#',
         ],
         [
@@ -436,5 +447,5 @@ return [
     |
     */
 
-    'livewire' => false,
+    'livewire' => true,
 ];
