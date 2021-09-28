@@ -9,67 +9,52 @@
 
 @section('content')
 
-    @if (session('info'))
-        <div class="alert alert-success">
-            <strong>{{ session('info') }}</strong>
-        </div>
-    @endif
+    @include('sweetalert::alert')
 
-    <div class="card row justify-content-md-center">
+    @livewire('admin.administrator-index')
 
-        <div class="card-body">
-            <table class="table table-striped table-hover">
+    {{-- <div class="card row justify-content-md-center">
 
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Nombre</th>
-                        <th>Rol</th>
-                        <th>Estado</th>
-                        <th colspan="2"></th>
-                    </tr>
-                </thead>
+        @if ($users->count())
+            <div class="card-body">
+                <table class="table table-striped table-hover">
 
-                <tbody>
-                    @foreach ($users as $user)
-                        <tr>
-                            <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }} {{ $user->last_name }}</td>
-                            <td>
-                                Rol
-                            </td>
-                            <td>estado</td>
-                            <td width="10px">
-                                @can('admin.administrators.edit')
-                                    <a class="btn btn-primary btn-sm"
-                                        href="{{ route('admin.administrators.edit', $user) }}">Editar</a>
-                                @endcan
-                            </td>
-                            <td width="10px">
-                                @can('admin.administrators.destroy')
-                                    <form action="{{ route('admin.administrators.destroy', $user) }}" method="POST">
-                                        @csrf
-                                        @method('delete')
-                                        <button type="submit" class="btn btn-danger">Eleminar</button>
-                                    </form>
-                                @endcan
+                    @include('admin.partials.thead')
 
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
+                    <tbody>
+                        @foreach ($users as $user)
+                            <tr>
+                                <td>{{ $user->id }}</td>
+                                <td>{{ $user->name }} {{ $user->last_name }}</td>
+                                <td>{{ $user->email }}</td>
+                                <td>{{ $user->phone }}</td>
+                                <td>estado</td>
+                                <td width="10px">
+                                    @can('admin.administrators.edit')
+                                        <a class="btn btn-primary btn-sm"
+                                            href="{{ route('admin.administrators.edit', $user) }}">Editar</a>
+                                    @endcan
+                                </td>
+                                <td width="10px">
+                                    @can('admin.administrators.destroy')
+                                        <form action="{{ route('admin.administrators.destroy', $user) }}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="submit" class="btn btn-danger btn-sm">Eleminar</button>
+                                        </form>
+                                    @endcan
 
-            </table>
-        </div>
-    </div>
-@stop
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
 
-@section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
-@stop
-
-@section('js')
-    <script>
-        console.log('Hi!');
-    </script>
+                </table>
+            </div>
+        @else
+            <div class="card-body">
+                No hay Administradores registrados
+            </div>
+        @endif
+    </div> --}}
 @stop

@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Spatie\Permission\Models\Role;
+use RealRashid\SweetAlert\Facades\Alert;
+use App\Http\Requests\UserRequest;
+
 
 class AdministratorController extends Controller
 {
@@ -16,79 +19,74 @@ class AdministratorController extends Controller
         $this->middleware('can:admin.administrators.create')->only('create', 'store');
         $this->middleware('can:admin.administrators.edit')->only('edit', 'update');
         $this->middleware('can:admin.administrators.destroy')->only('destroy');
-
     }
 
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
 
-        $users = User::role('admin')->latest('id')->get();
+        // $users = User::role('admin')->latest('id')->get();
         // $users = User::doesntHave('roles')->get();
-        
-        return view('admin.administrators.index', compact('users'));
+
+        return view('admin.administrators.index');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('admin.administrators.create');
+        $status = [1,2];
+        return view('admin.administrators.create', compact('status'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function store(UserRequest $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'last_name' => 'required',
-            'birthdate' => "required|date|after:1960-12-31|before:2003-12-31",
-            'email' => 'required|email|unique:users',
-            'password' => 'required'
-        ]);
+
+        $password = bcrypt($request['password']);
+        $request['password'] = $password;
         
-        $administrator = User::create($request->all());
+        $administrator = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','status','user_id'));
+        
         $administrator->roles()->sync(2);
-
         $name =  $administrator->name;
-        // return $administrator;
-        return redirect()->route('admin.administrators.index')->with('info', 'Administrador: '.$name.' se creo correctamente');
-    }
 
+        Alert::success("Administrador $name", 'Ha sido creado correctamente');
+
+        return redirect()->route('admin.administrators.index');
+    }
 
     public function edit(User $administrator)
     {
-        return view('admin.administrators.edit', compact('administrator'));
+        $status = $administrator->status;
+        return view('admin.administrators.edit', compact('administrator', 'status'));
     }
 
     public function update(Request $request, User $administrator)
     {
+        
         $request->validate([
             'name' => 'required',
             'last_name' => 'required',
             'birthdate' => "required|date|after:1960-12-31|before:2003-12-31",
+            'identification' => "required|min:7|unique:users,identification,$administrator->id",
+            'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$administrator->id",
+            'status' => 'required|integer|min:1|max:2'
         ]);
-        $administrator->update($request->all());
+
+        // $request['password'] = $administrator->password;
+        // $request['user_id'] = $administrator->user_id;
+
+        $administrator->update($request->only('name','last_name','birthdate','identification','phone','email','status'));
         $name = $administrator->name;
-        // return redirect()->route('admin.administrators.index')->with('info','La información del administrador: '.$name.', se actualizo correctamente ');
-        return redirect()->route('admin.administrators.edit', $administrator)->with('info','La información del administrador: '.$name.', se actualizo correctamente ');
+
+        toast("Administrador $name, ha sido actualizado correctamente",'success');
+    
+        return redirect()->route('admin.administrators.edit', $administrator);
     }
 
-    public function destroy($id)
+    public function destroy(User $administrator)
     {
-        //
+        $name =  $administrator->name;
+        $administrator->delete();
+        Alert::info("Administrador $name", "Se ha eleminado correctamente");
+        return redirect()->route('admin.administrators.index');
     }
 }

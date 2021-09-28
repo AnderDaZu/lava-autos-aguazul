@@ -3,51 +3,46 @@
 @section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Lista de Usuarios</h1>
+    <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.employees.create') }}">Crea Empleado</a>
+    <h1>Lista de Empleados</h1>
 @stop
 
 @section('content')
 
     @include('sweetalert::alert')
 
-    @livewire('admin.user-index')
+    @livewire('admin.employee-index')
+
     {{-- <div class="card row justify-content-md-center">
 
-        @if ($users->count())
+        @if ($employees->count())
             <div class="card-body">
                 <table class="table table-striped table-hover">
 
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Nombre</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
-                            <th colspan="2"></th>
-                        </tr>
-                    </thead>
+                    @include('admin.partials.thead')
 
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($employees as $employee)
                             <tr>
-                                <td>{{ $user->id }}</td>
-                                <td>{{ $user->name }} {{ $user->last_name }}</td>
-                                <td>
-                                    Rol
-                                </td>
+                                <td>{{ $employee->id }}</td>
+                                <td>{{ $employee->name }} {{ $employee->last_name }}</td>
+                                <td>{{ $employee->email }}</td>
+                                <td>{{ $employee->phone }}</td>
                                 <td>estado</td>
                                 <td width="10px">
-                                    @can('admin.users.edit')
+                                    @can('admin.employees.edit')
                                         <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.users.edit', $user) }}">Editar</a>
+                                            href="{{ route('admin.employees.edit', $employee) }}">Editar</a>
                                     @endcan
                                 </td>
                                 <td width="10px">
-                                    @can('admin.users.destroy')
-                                        <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                                    @can('admin.employees.destroy')
+                                        <form action="{{ route('admin.employees.destroy', $employee) }}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-danger">Eleminar</button>
+                                            <button type="submit" class="btn btn-danger">
+                                                Eleminar
+                                            </button>
                                         </form>
                                     @endcan
 
@@ -55,16 +50,15 @@
                             </tr>
                         @endforeach
                     </tbody>
+
                 </table>
             </div>
         @else
             <div class="card-body">
-                No hay jefes de patio registrados
+                No hay Empleados registrados
             </div>
-        @endif 
-
+        @endif
     </div> --}}
-
 @stop
 
 @section('css')

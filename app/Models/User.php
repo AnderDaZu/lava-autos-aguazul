@@ -26,17 +26,21 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
+        'user_name',
         'name',
         'last_name',
         'birthdate',
+        'identification',
+        'phone',
         'email',
-        'password', 
+        'password',
+        'status', 
         'user_id'
     ];
 
     public function getRouteKeyName()
     {
-        return "name";
+        return "user_name";
     }
 
     /**

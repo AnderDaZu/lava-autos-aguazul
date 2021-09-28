@@ -3,7 +3,7 @@
 @section('title', 'Los Coches')
 
 @section('content_header')
-    <h1>Editar Administrador</h1>
+    <h1>Editar Jefe de Patio</h1>
 @stop
 
 @section('content')
@@ -12,11 +12,11 @@
 
     <div class="card">
         <div class="card-body">
-            {!! Form::model($administrator, ['route'=> ['admin.administrators.update', $administrator], 'autocomplete' => 'off', 'method' => 'put']) !!}
+            {!! Form::model($yardManager, ['route'=> ['admin.yardManagers.update', $yardManager], 'autocomplete' => 'off', 'method' => 'put']) !!}
 
             @include('admin.partials.edit')
 
-            {!! Form::submit('Editar administrador', ['class'=>'btn btn-primary']) !!}
+            {!! Form::submit('Editar jefe de patio', ['class'=>'btn btn-primary']) !!}
 
             {!! Form::close() !!}
         </div>

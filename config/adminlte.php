@@ -243,46 +243,78 @@ return [
             'url'  => 'admin/blog',
             'can'  => 'manage-blog',
         ],
-      
-        ['header' => 'PERSONAL'],
-        [
-            'text' => 'Administradores',
-            'route' => 'admin.administrators.index',
-            'icon' => 'fas fa-fw fa-user',
-            'active' => ['admin/administrators*'],
-            'can' => 'admin.administrators.index'
-        ],
-        [
-            'text' => 'Jefes de Patio',
-            'url'  => 'admin/settings',
-            'active' => ['admin/employees*'],
-            'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Lavadores',
-            'url'  => 'admin/settings',
-            'icon' => 'fas fa-fw fa-user',
-            'active' => ['admin/employees*'],
-        ],
-        [
-            'text' => 'Usuarios',
-            'url'  => 'admin/users',
-            'icon' => 'fas fa-fw fa-user',
-            'active' => ['admin/users*'],
+        ['header' => 'USUARIOS DEL SISTEMA'],
+        ['text' => 'Personal',
+         'icon' => 'fas fa-fw fa-users',
+         'submenu' => [
+            [
+                'text' => 'Administradores',
+                'route' => 'admin.administrators.index',
+                'icon' => 'fas fa-fw fa-user-cog',
+                'active' => ['admin/administrators*'],
+                'can' => 'admin.administrators.index'
+            ],
+            [
+                'text' => 'Jefes de Patio',
+                'route' => 'admin.yardManagers.index',
+                'active' => ['admin/yardManagers*'],
+                'icon' => 'fas fa-fw fa-user',
+            ],
+            [
+                'text' => 'Empleados',
+                'route' => 'admin.employees.index',
+                'active' => ['admin/employees*'],
+                'icon' => 'fas fa-fw fa-people-carry',
+            ],
+            [
+                'text' => 'Usuarios',
+                'url'  => 'admin/users',
+                'icon' => 'fas fa-fw fa-user-friends',
+                'active' => ['admin/users*'],
+            ],             
+         ]
         ],
         ['header' => 'AGENDAS'],
-        [
-            'text'       => 'Lista de Agendas',
-            'icon_color' => 'yellow',
-            'active' => ['admin/agendas*'],
-            'url'        => '#',
+        ['text' => 'Gestionar Agendas',
+         'icon' => 'fas fa-fw fa-calendar-minus',
+          'submenu' => [
+            [
+                'text'       => 'Lista de Agendas',
+                'icon' => 'fas fa-fw fa-clipboard-list',
+                'active' => ['admin/agendas*'],
+                'url'        => '#',
+            ],
+            [
+                'text'       => 'Crear Agenda',
+                'icon' => 'fas fa-fw fa-calendar-plus',
+                'url'        => '#',
+            ],
+          ],
         ],
-        [
-            'text'       => 'Crear de Agenda',
-            'icon_color' => 'blue',
-            'url'        => '#',
+        ['header' => 'VEHICULOS'],
+        ['text' => 'Gestionar Vehículos',
+         'icon' => 'fas fa-fw fa-car',
+          'submenu' => [
+            [
+                'text'       => 'Marcas',
+                'icon' => 'fas fa-fw fa-dragon',
+                'active' => ['admin/agendas*'],
+                'url'        => '#',
+            ],
+            [
+                'text'       => 'Lineas',
+                'icon' => 'fas fa-fw fa-car-side',
+                'url'        => '#',
+            ],
+            [
+                'text'       => 'Tipos',
+                'icon' => 'fab fa-fw fa-buffer',
+                'url'        => '#',
+            ],
+          ],
         ],
-        ['header' => 'Estadisticas'],
+        ['header' => 'POSTS'],
+        ['header' => 'ESTADISTICAS'],
         [
             'text'       => 'Servicios Realizados',
             'icon_color' => 'yellow',
