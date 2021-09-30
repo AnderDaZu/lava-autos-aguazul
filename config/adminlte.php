@@ -296,20 +296,20 @@ return [
          'icon' => 'fas fa-fw fa-car',
           'submenu' => [
             [
-                'text'       => 'Marcas',
+                'text' => 'Marcas',
                 'icon' => 'fas fa-fw fa-dragon',
-                'active' => ['admin/agendas*'],
-                'url'        => '#',
+                'active' => ['admin/marks*'],
+                'route'  => 'admin.marks.index',
             ],
             [
                 'text'       => 'Lineas',
                 'icon' => 'fas fa-fw fa-car-side',
-                'url'        => '#',
+                'url'  => '#',
             ],
             [
                 'text'       => 'Tipos',
                 'icon' => 'fab fa-fw fa-buffer',
-                'url'        => '#',
+                'url'  => '#',
             ],
           ],
         ],

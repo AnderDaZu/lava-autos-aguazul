@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Admin\MarkController;
 use App\Http\Controllers\Admin\YardManagerController;
 
 Route::get('', [HomeController::class, 'index'])->name('admin.home')->middleware('active');
@@ -16,3 +17,5 @@ Route::resource('employees', EmployeeController::class)->names('admin.employees'
 Route::resource('yardManagers', YardmanagerController::class)->names('admin.yardManagers')->middleware('active');
 
 Route::resource('users', UserController::class)->names('admin.users')->middleware('active'); 
+
+Route::resource('marks', MarkController::class)->names('admin.marks');
