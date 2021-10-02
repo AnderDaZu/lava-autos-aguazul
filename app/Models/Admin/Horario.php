@@ -10,6 +10,11 @@ class Horario extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'start_hour',
+        'end_hour'
+    ];
+
     // Relación uno a muchos
     public function users(){
         return $this->hasMany(User::class,'id');

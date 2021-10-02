@@ -46,7 +46,8 @@ class YardManagerController extends Controller
     }
 
     public function edit(User $yardManager)
-    {
+    {   
+        // return $yardManager;
         return view('admin.yardManagers.edit', compact('yardManager'));
     }
 

@@ -53,7 +53,6 @@ class MarkController extends Controller
 
     public function destroy(Mark $mark)
     {
-        // return $mark;
         $name = $mark->name;
         $mark->delete();
         Alert::info("Marca $name", "Se ha eleminado correctamente");

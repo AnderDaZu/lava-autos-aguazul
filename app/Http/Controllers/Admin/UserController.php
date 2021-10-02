@@ -31,14 +31,16 @@ class UserController extends Controller
 
     public function update(Request $request, User $user)
     {
+        // return $request;
         $request->validate([
             'email' => "required|email|unique:users,email,$user->id",
             'status' => 'required|integer|min:1|max:2'
         ]);
 
-        $user->update([$request->only('email','status')]);
+        $user->update($request->only('email','status'));
 
         $name = $user->name;
+
         toast("Email de usuario $name, ha sido actualizado correctamente",'success');
         
         return redirect()->route('admin.users.edit', compact('user'));

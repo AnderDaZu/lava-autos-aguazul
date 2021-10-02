@@ -6,6 +6,8 @@ use App\Http\Controllers\Admin\AdministratorController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\MarkController;
+use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\YardManagerController;
 
 Route::get('', [HomeController::class, 'index'])->name('admin.home')->middleware('active');
@@ -19,3 +21,7 @@ Route::resource('yardManagers', YardmanagerController::class)->names('admin.yard
 Route::resource('users', UserController::class)->names('admin.users')->middleware('active'); 
 
 Route::resource('marks', MarkController::class)->names('admin.marks');
+
+Route::resource('types', TypeController::class)->names('admin.types');
+
+Route::resource('services', ServiceController::class)->names('admin.services');

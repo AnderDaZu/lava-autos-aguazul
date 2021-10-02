@@ -291,6 +291,12 @@ return [
             ],
           ],
         ],
+        ['header' => 'SERVICIOS'],
+        ['text' => 'Lista de Servicios',
+         'icon' => 'fab fa-fw fa-servicestack',
+         'active' => ['admin/services*'],
+         'route'  => 'admin.services.index',
+        ],
         ['header' => 'VEHICULOS'],
         ['text' => 'Gestionar Vehículos',
          'icon' => 'fas fa-fw fa-car',
@@ -304,12 +310,13 @@ return [
             [
                 'text'       => 'Lineas',
                 'icon' => 'fas fa-fw fa-car-side',
-                'url'  => '#',
+                'url' => '#'
             ],
             [
                 'text'       => 'Tipos',
                 'icon' => 'fab fa-fw fa-buffer',
-                'url'  => '#',
+                'active' => ['admin/types*'],
+                'route'  => 'admin.types.index',
             ],
           ],
         ],

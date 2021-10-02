@@ -20,7 +20,12 @@
                             <td>{{ $yardManager->name }} {{ $yardManager->last_name }}</td>
                             <td>{{ $yardManager->email }}</td>
                             <td>{{ $yardManager->phone }}</td>
-                            <td>estado</td>
+                            {{-- <td>estado</td> --}}
+                            @if ($yardManager->status == 1)
+                                <td>Activo</td>
+                            @elseif($yardManager->status == 2)
+                                <td>Inactivo</td>
+                            @endif 
                             <td width="10px">
                                 @can('admin.yardManagers.edit')
                                     <a class="btn btn-primary btn-sm"

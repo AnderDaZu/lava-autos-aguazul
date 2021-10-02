@@ -20,7 +20,12 @@
                             <td>{{ $employee->name }} {{ $employee->last_name }}</td>
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone }}</td>
-                            <td>estado</td>
+                            {{-- <td>estado</td> --}}
+                            @if ($employee->status == 1)
+                                <td>Activo</td>
+                            @elseif($employee->status == 2)
+                                <td>Inactivo</td>
+                            @endif
                             <td width="10px">
                                 @can('admin.employees.edit')
                                     <a class="btn btn-primary btn-sm"
@@ -53,4 +58,4 @@
             No hay Empleados registrados
         </div>
     @endif
-</div>
+</div> 

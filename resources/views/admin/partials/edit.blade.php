@@ -69,7 +69,7 @@
                     Inactivo
                 </label>
             </div>
-        @else
+        @elseif($status == 2) 
             <div class="form-check">
                 <input class="form-check-input" type="radio" name="status" id="status1" value="1">
                 <label class="form-check-label" for="status1">
@@ -83,7 +83,5 @@
                 </label>
             </div>
         @endif
-
-
     </div>
 </div>

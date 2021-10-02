@@ -36,7 +36,8 @@ class User extends Authenticatable
         'email',
         'password',
         'status', 
-        'user_id'
+        'user_id',
+        'horario_id'
     ];
 
     public function getRouteKeyName()

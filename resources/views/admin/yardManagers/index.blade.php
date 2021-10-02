@@ -11,7 +11,7 @@
     
     @include('sweetalert::alert')
 
-    @livewire('admin.yard-manager-index')
+    @livewire('admin.yard-manager-index') 
 
     {{-- <div class="card row justify-content-md-center">
 

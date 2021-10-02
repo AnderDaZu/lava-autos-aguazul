@@ -8,20 +8,19 @@
 @stop
 
 @section('content')
-{{--     
+    
     @include('sweetalert::alert')
 
-    @livewire('admin.yard-manager-index') --}}
+    @livewire('admin.mark-index')
 
-    @include('sweetalert::alert')
+    {{-- @include('sweetalert::alert')
 
-        <div class="card row justify-content-md-center">
+    <div class="card row justify-content-md-center">
 
         @if ($marks->count()) 
             <div class="card-body">
                 <table class="table table-striped table-hover">
 
-                    {{-- @include('admin.partials.thead') --}}
                     <thead>
                         <tr>
                             <th>ID</th>
@@ -36,27 +35,17 @@
                                 <td>{{ $mark->id }}</td>
                                 <td>{{ $mark->name }}</td>
                                 <td width="10px">
-                                    {{-- @can('admin.marks.edit') --}}
-                                        <a class="btn btn-primary btn-sm"
-                                            href="{{ route('admin.marks.edit', $mark) }}">Editar</a>
-                                    {{-- @endcan --}}
+                                    <a class="btn btn-primary btn-sm"
+                                        href="{{ route('admin.marks.edit', $mark) }}">Editar</a>
                                 </td>
                                 <td width="10px">
-                                    {{-- @can('admin.marks.destroy') --}}
-                                        <form action="{{ route('admin.marks.destroy', $mark) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm">
-                                                Eleminar
-                                            </button>
-                                        </form>
-                                        {{-- <form action="{{ route('admin.administrators.destroy', $user) }}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-danger btn-sm">Eleminar</button>
-                                        </form> --}}
-                                    {{-- @endcan --}}
-
+                                    <form action="{{ route('admin.marks.destroy', $mark) }}" method="POST">
+                                        @csrf
+                                        @method('delete')
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            Eleminar
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
@@ -69,6 +58,5 @@
                 No hay marcas de vehículos registradas
             </div>
         @endif 
-    </div>
-
+    </div> --}}
 @stop
