@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Admin\Agenda;
 use App\Models\Admin\Horario;
 use App\Models\Admin\State;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -84,6 +85,10 @@ class User extends Authenticatable
     // Relación uno a muchos (inversa)
     public function state(){
         return $this->belongsTo(State::class, 'state_id');
+    }
+
+    public function agendas(){
+        return $this->hasMany(Agenda::class, 'admin_id');
     }
     
 
