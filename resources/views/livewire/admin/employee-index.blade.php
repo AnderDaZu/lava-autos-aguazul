@@ -21,9 +21,9 @@
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone }}</td>
                             {{-- <td>estado</td> --}}
-                            @if ($employee->status == 1)
+                            @if ($employee->state_id == 1)
                                 <td>Activo</td>
-                            @elseif($employee->status == 2)
+                            @elseif($employee->state_id == 2)
                                 <td>Inactivo</td>
                             @endif
                             <td width="10px">

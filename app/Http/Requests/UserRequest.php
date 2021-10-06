@@ -32,7 +32,7 @@ class UserRequest extends FormRequest
             'phone' => 'required|min:10|max:10',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'status' => 'required|integer|min:1|max:2'
+            'state_id' => 'required|integer|min:1|max:2'
         ];
 
         return $rules;

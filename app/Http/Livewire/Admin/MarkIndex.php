@@ -19,7 +19,7 @@ class MarkIndex extends Component
     {
         $marks = Mark::where('name','LIKE','%'.$this->search.'%')
                         ->latest('id')
-                        ->paginate(10);
+                        ->paginate(10); 
         return view('livewire.admin.mark-index', compact('marks'));
     }
 }

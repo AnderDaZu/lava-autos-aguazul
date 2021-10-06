@@ -15,4 +15,12 @@ class Type extends Model
     {
         return 'name';
     }
+
+    // public function Lines(){
+    //     return $this->hasMany(Line::class, 'type_id');
+    // }
+
+    public function modelcars(){
+        return $this->hasMany(Modelcar::class, 'type_id');
+    }
 }

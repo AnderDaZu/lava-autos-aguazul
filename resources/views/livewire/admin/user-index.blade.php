@@ -27,9 +27,9 @@
                             <td>{{ $user->name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
-                            @if ($user->status == 1)
+                            @if ($user->state_id == 1)
                                 <td>Activo</td>
-                            @elseif($user->status == 2)
+                            @elseif($user->state_id == 2)
                                 <td>Inactivo</td>
                             @endif
                             <td width="10px"><a class="btn btn-primary btn-sm" href="{{ route('admin.users.edit', $user) }}">Editar</a></td>

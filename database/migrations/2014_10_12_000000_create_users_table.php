@@ -24,12 +24,12 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->integer('status')->nullable();
             $table->rememberToken();
             $table->foreignId('current_team_id')->nullable();
             $table->string('profile_photo_path', 2048)->nullable();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->unsignedBigInteger('horario_id')->nullable();
+            $table->unsignedBigInteger('state_id')->nullable();
 
             $table->foreign('user_id')
                 ->references('id')->on('users')
@@ -37,6 +37,10 @@ class CreateUsersTable extends Migration
 
             $table->foreign('horario_id')
                 ->references('id')->on('horarios')
+                ->onDelete('set null');
+
+            $table->foreign('state_id')
+                ->references('id')->on('states')
                 ->onDelete('set null');
 
             $table->timestamps();

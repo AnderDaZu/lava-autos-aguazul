@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use App\Models\Admin\Horario;
+use App\Models\Admin\State;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -35,7 +36,7 @@ class User extends Authenticatable
         'phone',
         'email',
         'password',
-        'status', 
+        'state_id', 
         'user_id',
         'horario_id'
     ];
@@ -78,6 +79,11 @@ class User extends Authenticatable
     // Relación uno a muchos (inversa)
     public function horario(){
         return $this->belongsTo(Horario::class, 'horario_id');
+    }
+
+    // Relación uno a muchos (inversa)
+    public function state(){
+        return $this->belongsTo(State::class, 'state_id');
     }
     
 

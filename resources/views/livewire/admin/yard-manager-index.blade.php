@@ -21,9 +21,9 @@
                             <td>{{ $yardManager->email }}</td>
                             <td>{{ $yardManager->phone }}</td>
                             {{-- <td>estado</td> --}}
-                            @if ($yardManager->status == 1)
+                            @if ($yardManager->state_id == 1)
                                 <td>Activo</td>
-                            @elseif($yardManager->status == 2)
+                            @elseif($yardManager->state_id == 2)
                                 <td>Inactivo</td>
                             @endif 
                             <td width="10px">

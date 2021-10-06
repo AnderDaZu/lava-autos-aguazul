@@ -18,9 +18,9 @@ class AdministratorIndex extends Component
     public function render()
     {
         $users = User::role('admin')
-        ->where('name','LIKE','%'.$this->search.'%')
-        ->latest('id')
-        ->paginate(10);
+            ->where('name','LIKE','%'.$this->search.'%')
+            ->latest('id')
+            ->paginate(10);
 
         return view('livewire.admin.administrator-index', compact('users'));
     }

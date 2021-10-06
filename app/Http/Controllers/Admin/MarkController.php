@@ -34,7 +34,7 @@ class MarkController extends Controller
     }
 
     public function edit(Mark $mark)
-    {
+    {   
         return view('admin.marks.edit', compact('mark'));
     }
 

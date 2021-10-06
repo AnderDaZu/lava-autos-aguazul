@@ -35,7 +35,7 @@ class EmployeeController extends Controller
         $password = bcrypt($request['password']);
         $request['password'] = $password;
         
-        $employee = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','status','user_id'));
+        $employee = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','state_id','user_id'));
         // $employee = User::create($request->all());
         $employee->roles()->sync(4);
         $name =  $employee->name;
@@ -48,9 +48,8 @@ class EmployeeController extends Controller
 
     public function edit(User $employee)
     {
-        $status = $employee->status;
         $horario_id = $employee->horario_id;
-        return view('admin.employees.edit', compact('employee', 'status', 'horario_id'));
+        return view('admin.employees.edit', compact('employee', 'horario_id'));
     }
 
     public function update(Request $request, User $employee)
@@ -63,20 +62,11 @@ class EmployeeController extends Controller
             'identification' => "required|min:7|unique:users,identification,$employee->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$employee->id",
-            'status' => 'required|integer|min:1|max:2',
+            'state_id' => 'required|integer|min:1|max:2',
             'horario_id' => 'required|integer|min:1|max:2'
         ]);
 
-        // return $request;
-
-        // $employee->update($request->only('name','last_name','birthdate','identification','phone','email','status','horario_id'));
-        $employee->update($request->all());
-        
-        // if ($request->horario_id) {
-        //     // $employee->horario()->detach($employee->horario_id);
-        //     // $employee->horario()->attach($request->horario_id);
-        //     $employee->horario()->update(['horario_id' => $request->horario_id]);
-        // }
+        $employee->update($request->only('name','last_name','birthdate','identification','phone','email','state_id','horario_id'));
 
         $name = $employee->name;
 

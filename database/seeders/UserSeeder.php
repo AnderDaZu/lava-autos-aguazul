@@ -20,10 +20,10 @@ class UserSeeder extends Seeder
             'last_name' => 'Daza',
             'birthdate' => '1996-10-20',
             'phone' => '3216549871',
-            'status' => 1,
+            'state_id' => 1,
             'email' => 'anderson@g.com',
             'email_verified_at' => now(),
-            'password' => bcrypt('12345678')
+            'password' => bcrypt('12345678') 
         ])->assignRole(['management']);
 
         User::create([
@@ -33,7 +33,7 @@ class UserSeeder extends Seeder
             'birthdate' => '1999-03-10',
             'identification' => '1236549872',
             'phone' => '3216549856',
-            'status' => 1,
+            'state_id' => 1,
             'email' => 'kener@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678')
@@ -46,7 +46,7 @@ class UserSeeder extends Seeder
             'birthdate' => '2000-11-05',
             'identification' => '1236549963',
             'phone' => '3216547845',
-            'status' => 1,
+            'state_id' => 1,
             'email' => 'karen@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678')
@@ -59,7 +59,7 @@ class UserSeeder extends Seeder
             'birthdate' => '2001-01-11',
             'identification' => '1016549963',
             'phone' => '3216541245',
-            'status' => 1,
+            'state_id' => 1,
             'email' => 'sebas@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678')
@@ -72,7 +72,7 @@ class UserSeeder extends Seeder
             'birthdate' => '1998-05-20',
             'identification' => '1026549963',
             'phone' => '3108549871',
-            'status' => 1,
+            'state_id' => 1,
             'email' => 'juan@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678')
@@ -85,7 +85,7 @@ class UserSeeder extends Seeder
             'birthdate' => '2003-06-30',
             'identification' => '1006549963',
             'phone' => '3116549456',
-            'status' => 1,
+            'state_id' => 1,
             'email' => 'luisa@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
@@ -99,14 +99,14 @@ class UserSeeder extends Seeder
             'birthdate' => '2001-05-15',
             'identification' => '1036649963',
             'phone' => '3016549159',
-            'status' => 1,
+            'state_id' => 1,
             'email' => '   alberto@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
             'horario_id' => 1
         ])->assignRole(['employee']);
 
-        User::factory(9)->create();
+        User::factory(29)->create();
         
     }
 }

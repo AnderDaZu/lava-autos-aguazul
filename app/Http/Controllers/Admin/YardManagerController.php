@@ -35,8 +35,7 @@ class YardManagerController extends Controller
         $password = bcrypt($request['password']);
         $request['password'] = $password;
 
-        $yard_user = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','user_id'));
-        // $yard_user = User::create($request->all());
+        $yard_user = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','state_id','user_id'));
         $yard_user->roles()->attach(3);
         $name = $yard_user->name;
 
@@ -47,8 +46,8 @@ class YardManagerController extends Controller
 
     public function edit(User $yardManager)
     {   
-        // return $yardManager;
-        return view('admin.yardManagers.edit', compact('yardManager'));
+        $status = $yardManager->status;
+        return view('admin.yardManagers.edit', compact('yardManager', 'status'));
     }
 
     public function update(Request $request, User $yardManager)
@@ -61,14 +60,10 @@ class YardManagerController extends Controller
             'identification' => "required|min:7|unique:users,identification,$yardManager->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$yardManager->id",
+            'state_id' => 'required|integer|min:1|max:2'
         ]);
-
-        $request['password'] = $yardManager->password;
-
-        $request['user_id'] = $yardManager->user_id;
-
         
-        $yardManager->update($request->all());
+        $yardManager->update($request->only('name', 'last_name', 'birthdate', 'identification', 'phone', 'email', 'state_id'));
         $name = $yardManager->name;
 
         toast("Jefe de patio $name, ha sido actualizado correctamente",'success');

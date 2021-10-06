@@ -8,7 +8,7 @@ use App\Models\User;
 use Spatie\Permission\Models\Role;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UserRequest;
-
+use App\Models\Admin\State;
 
 class AdministratorController extends Controller
 {
@@ -32,17 +32,16 @@ class AdministratorController extends Controller
 
     public function create()
     {
-        $status = [1,2];
-        return view('admin.administrators.create', compact('status'));
+        return view('admin.administrators.create');
     }
 
     public function store(UserRequest $request)
-    {
+    { 
 
         $password = bcrypt($request['password']);
         $request['password'] = $password;
         
-        $administrator = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','status','user_id'));
+        $administrator = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','state_id','user_id'));
         
         $administrator->roles()->sync(2);
         $name =  $administrator->name;
@@ -54,8 +53,7 @@ class AdministratorController extends Controller
 
     public function edit(User $administrator)
     {
-        $status = $administrator->status;
-        return view('admin.administrators.edit', compact('administrator', 'status'));
+        return view('admin.administrators.edit', compact('administrator'));
     }
 
     public function update(Request $request, User $administrator)
@@ -68,13 +66,13 @@ class AdministratorController extends Controller
             'identification' => "required|min:7|unique:users,identification,$administrator->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$administrator->id",
-            'status' => 'required|integer|min:1|max:2'
+            'state_id' => 'required|integer|min:1|max:2' 
         ]);
 
         // $request['password'] = $administrator->password;
         // $request['user_id'] = $administrator->user_id;
 
-        $administrator->update($request->only('name','last_name','birthdate','identification','phone','email','status'));
+        $administrator->update($request->only('name','last_name','birthdate','identification','phone','email','state_id'));
         $name = $administrator->name;
 
         toast("Administrador $name, ha sido actualizado correctamente",'success');

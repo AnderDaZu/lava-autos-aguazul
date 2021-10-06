@@ -15,4 +15,13 @@ class Mark extends Model
     {
         return 'name';
     }
+
+    // public function Lines(){
+    //     return $this->hasMany(Line::class,'mark_id');
+    // }
+
+    public function modelcars(){
+        return $this->hasMany(Modelcar::class, 'mark_id');
+    }
+    
 }
