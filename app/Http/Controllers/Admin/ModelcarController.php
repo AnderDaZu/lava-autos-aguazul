@@ -11,6 +11,14 @@ use Illuminate\Http\Request;
 
 class ModelcarController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.modelcars.index')->only('index');
+        $this->middleware('can:admin.modelcars.create')->only('create', 'store');
+        $this->middleware('can:admin.modelcars.edit')->only('edit', 'update');
+        $this->middleware('can:admin.modelcars.destroy')->only('destroy');
+    }
+
     public function index()
     {
         return view('admin.modelcars.index');
@@ -27,8 +35,8 @@ class ModelcarController extends Controller
     {
         $request->validate([
             'name' => 'required|unique:modelcars',
-            'mark_id' => 'required|integer',
-            'type_id' => 'required|integer'
+            'mark_id' => 'required|integer|exists:marks,id',
+            'type_id' => 'required|integer|exists:types,id'
         ]);
         $modelcar =  Modelcar::create($request->only('name','mark_id','type_id'));
         $name = $modelcar->name;
@@ -49,8 +57,8 @@ class ModelcarController extends Controller
     {
         $request->validate([
             'name' => "required|unique:modelcars,name,$modelcar->id",
-            'mark_id' => 'required|integer',
-            'type_id' => 'required|integer'
+            'mark_id' => 'required|integer|exists:marks,id',
+            'type_id' => 'required|integer|exists:types,id'
         ]);
         $modelcar->update($request->only('name','mark_id','type_id'));
 

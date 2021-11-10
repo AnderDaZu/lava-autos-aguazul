@@ -58,15 +58,15 @@ class AdministratorController extends Controller
 
     public function update(Request $request, User $administrator)
     {
-        
+        $year = date("Y", strtotime(now('Y')."- 15 years"));
         $request->validate([
             'name' => 'required',
             'last_name' => 'required',
-            'birthdate' => "required|date|after:1960-12-31|before:2003-12-31",
+            'birthdate' => "required|date|after:1960-12-31|before:$year-12-31",
             'identification' => "required|min:7|unique:users,identification,$administrator->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$administrator->id",
-            'state_id' => 'required|integer|min:1|max:2' 
+            'state_id' => 'required|integer|exists:states,id' 
         ]);
 
         // $request['password'] = $administrator->password;
@@ -77,7 +77,7 @@ class AdministratorController extends Controller
 
         toast("Administrador $name, ha sido actualizado correctamente",'success');
     
-        return redirect()->route('admin.administrators.edit', $administrator);
+        return redirect()->route('admin.administrators.index');
     }
 
     public function destroy(User $administrator)

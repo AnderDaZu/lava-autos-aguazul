@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class MarkController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.marks.index')->only('index');
+        $this->middleware('can:admin.marks.create')->only('create', 'store');
+        $this->middleware('can:admin.marks.edit')->only('edit', 'update');
+        $this->middleware('can:admin.marks.destroy')->only('destroy');
+    }
+
     public function index()
     {
         $marks = Mark::all();

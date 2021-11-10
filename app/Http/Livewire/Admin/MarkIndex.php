@@ -15,6 +15,10 @@ class MarkIndex extends Component
 
     public $search; 
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {
         $marks = Mark::where('name','LIKE','%'.$this->search.'%')

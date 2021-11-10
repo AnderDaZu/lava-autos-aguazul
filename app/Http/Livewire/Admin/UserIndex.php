@@ -14,10 +14,14 @@ class UserIndex extends Component
     protected $paginationTheme = 'bootstrap';
 
     public $search;
+
+    public function updatingSearch(){
+        $this->resetPage();
+    }
     
     public function render()
     { 
-        $users = User::doesntHave('roles')
+        $users = User::role('user')
                         ->where('name','LIKE','%'.$this->search.'%')
                         ->latest('id')
                         ->paginate(10);

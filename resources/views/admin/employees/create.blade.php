@@ -13,7 +13,7 @@
 
             @include('admin.partials.form')
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 {!! Form::label('horario_id', 'Horario laboral') !!}
                 <br>
                 <div class="form-check">
@@ -28,7 +28,7 @@
                         07:00 Pm - 07:00 Am
                     </label>
                 </div>
-            </div>
+            </div> --}}
 
 
             {!! Form::submit('Crear Empleado', ['class' => 'btn btn-primary']) !!}

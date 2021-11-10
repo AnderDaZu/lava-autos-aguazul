@@ -34,7 +34,7 @@ class UserController extends Controller
         // return $request;
         $request->validate([
             'email' => "required|email|unique:users,email,$user->id",
-            'state_id' => 'required|integer|min:1|max:2'
+            'state_id' => 'required|integer|exists:states,id'
         ]);
 
         $user->update($request->only('email','state_id'));
@@ -43,7 +43,7 @@ class UserController extends Controller
 
         toast("Usuario $name, ha sido actualizado correctamente",'success');
         
-        return redirect()->route('admin.users.edit', compact('user'));
+        return redirect()->route('admin.users.index');
         // return redirect()->route('admin.users.index');
     }
 

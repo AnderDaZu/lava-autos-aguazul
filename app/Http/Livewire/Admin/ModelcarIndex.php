@@ -15,6 +15,10 @@ class ModelcarIndex extends Component
 
     public $search; 
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {        
         $modelcars = Modelcar::where('name','LIKE','%'.$this->search.'%')

@@ -25,13 +25,13 @@
                             <td>{{ $mark->id }}</td>
                             <td>{{ $mark->name }}</td>
                             <td width="10px">
-                                {{-- @can('admin.marks.edit') --}}
+                                @can('admin.marks.edit')
                                     <a class="btn btn-primary btn-sm"
                                         href="{{ route('admin.marks.edit', $mark) }}">Editar</a>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                             <td width="10px">
-                                {{-- @can('admin.marks.destroy') --}}
+                                @can('admin.marks.destroy')
                                     <form action="{{ route('admin.marks.destroy', $mark) }}" method="POST">
                                         @csrf
                                         @method('delete')
@@ -39,7 +39,7 @@
                                             Eleminar
                                         </button>
                                     </form>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

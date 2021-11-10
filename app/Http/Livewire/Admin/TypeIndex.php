@@ -15,6 +15,10 @@ class TypeIndex extends Component
 
     public $search;
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {
         $types = Type::where('name','LIKE','%'.$this->search.'%')

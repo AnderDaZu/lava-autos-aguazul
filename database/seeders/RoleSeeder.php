@@ -20,7 +20,7 @@ class RoleSeeder extends Seeder
         $role2 = Role::create(['name' => 'admin']);
         $role3 = Role::create(['name' => 'yard_manager']);
         $role4 = Role::create(['name' => 'employee']);
-        $role5 = Role::create(['name' => 'user']);
+        $role5 = Role::create(['name' => 'user']); 
 
         Permission::create(['name' => 'admin.home'])->syncRoles([$role1, $role2]);
         
@@ -59,9 +59,14 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.marks.edit'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.marks.destroy'])->syncRoles([$role1]);
 
-        Permission::create(['name' => 'admin.lines.index'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.lines.create'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.lines.edit'])->syncRoles([$role1, $role2]);
-        Permission::create(['name' => 'admin.lines.destroy'])->syncRoles([$role1]);
+        Permission::create(['name' => 'admin.modelcars.index'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.modelcars.create'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.modelcars.edit'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.modelcars.destroy'])->syncRoles([$role1]);
+
+        Permission::create(['name' => 'admin.types.index'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.types.create'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.types.edit'])->syncRoles([$role1, $role2]);
+        Permission::create(['name' => 'admin.types.destroy'])->syncRoles([$role1]);
     }
 }

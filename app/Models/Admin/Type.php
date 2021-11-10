@@ -23,4 +23,8 @@ class Type extends Model
     public function modelcars(){
         return $this->hasMany(Modelcar::class, 'type_id');
     }
+
+    public function services(){
+        return $this->hasMany(Service::class, 'type_id');
+    }
 }

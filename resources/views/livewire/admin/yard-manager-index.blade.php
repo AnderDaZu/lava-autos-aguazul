@@ -20,7 +20,6 @@
                             <td>{{ $yardManager->name }} {{ $yardManager->last_name }}</td>
                             <td>{{ $yardManager->email }}</td>
                             <td>{{ $yardManager->phone }}</td>
-                            {{-- <td>estado</td> --}}
                             @if ($yardManager->state_id == 1)
                                 <td>Activo</td>
                             @elseif($yardManager->state_id == 2)

@@ -19,9 +19,19 @@ class CreateAgendasTable extends Migration
             $table->string('name');
             $table->date('start_date');
             $table->date('end_date');
-            $table->time('start_hour');
-            $table->time('end_hour');
+            // $table->time('start_hour');
+            // $table->time('end_hour');
+            $table->unsignedBigInteger('horario_id')->nullable( );
+            $table->unsignedBigInteger('employee_id');
             $table->unsignedBigInteger('admin_id')->nullable();
+
+            $table->foreign('horario_id')
+                    ->references('id')->on('horarios')
+                    ->onDelete('set null');
+
+            $table->foreign('employee_id')
+                    ->references('id')->on('users')
+                    ->onDelete('cascade');
 
             $table->foreign('admin_id')
                     ->references('id')->on('users')

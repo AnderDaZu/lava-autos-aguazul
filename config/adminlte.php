@@ -290,7 +290,7 @@ return [
                 [
                     'text'       => 'Lista de Agendas',
                     'icon' => 'fas fa-fw fa-clipboard-list',
-                    'active' => ['admin/agendas*'],
+                    'active' => ['admin/agendas/index'],
                     'route'        => 'admin.agendas.index',
                 ],
                 [
@@ -338,7 +338,15 @@ return [
             ],
         ],
 
-        
+        // citas
+        ['header' => 'CITAS'],
+
+        ['text' => 'Citas Agendadas',
+        'icon' => 'far fa-fw fa-list-alt',
+        'active' => ['admin/appointments*'],
+        'route'  => 'admin.appointments.index',
+        ],
+
         ['header' => 'POSTS'],
 
         ['header' => 'ESTADISTICAS'],

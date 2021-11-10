@@ -11,7 +11,16 @@
         <div class="card-body">
             <table class="table table-striped table-hover">
 
-                @include('admin.partials.thead')
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nombre</th>
+                        <th>email</th>
+                        <th>Telefono</th>
+                        <th>Estado</th>
+                        <th colspan="2"></th>
+                    </tr>
+                </thead>
 
                 <tbody>
                     @foreach ($employees as $employee)
@@ -20,7 +29,6 @@
                             <td>{{ $employee->name }} {{ $employee->last_name }}</td>
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone }}</td>
-                            {{-- <td>estado</td> --}}
                             @if ($employee->state_id == 1)
                                 <td>Activo</td>
                             @elseif($employee->state_id == 2)

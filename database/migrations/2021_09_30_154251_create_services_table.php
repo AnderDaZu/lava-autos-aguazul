@@ -17,7 +17,13 @@ class CreateServicesTable extends Migration
             $table->id();
             $table->string('name');
             $table->decimal('price',7,2);
+            $table->string('duration');
+            $table->unsignedBigInteger('type_id');
             $table->timestamps();
+
+            $table->foreign('type_id')
+                    ->references('id')->on('types')
+                    ->onDelete('cascade');
         });
     }
 

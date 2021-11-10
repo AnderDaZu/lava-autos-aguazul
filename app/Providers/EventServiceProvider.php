@@ -7,6 +7,12 @@ use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use Illuminate\Support\Facades\Event;
 use App\Models\User;
+use App\Models\Admin\Agenda;
+use App\Models\Api\v1\Appointment;
+use App\Models\Api\v1\Vehicle;
+use App\Observers\AgendaObserver;
+use App\Observers\Api\v1\AppointmentObserver;
+use App\Observers\Api\v1\VehicleObserver;
 use App\Observers\UserObserver;
 
 class EventServiceProvider extends ServiceProvider
@@ -30,5 +36,8 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
+        Agenda::observe(AgendaObserver::class);
+        Vehicle::observe(VehicleObserver::class);
+        Appointment::observe(AppointmentObserver::class);
     }
 }

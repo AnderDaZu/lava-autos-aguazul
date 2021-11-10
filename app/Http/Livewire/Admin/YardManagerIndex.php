@@ -15,6 +15,10 @@ class YardManagerIndex extends Component
 
     public $search;
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {
         $yardManagers = User::role('yard_manager')

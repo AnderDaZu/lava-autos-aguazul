@@ -33,10 +33,10 @@
                 </div>
             </div> --}}
 
-            <div class="form-group">
+            {{-- <div class="form-group">
                 {!! Form::label('horario_id', 'Horario laboral') !!}
                 <br>
-                @if ($horario_id == 1)
+                @if ($start == '07:00:00')
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="horario_id" id="horario1" value="1" checked>
                         <label class="form-check-label" for="horario1">
@@ -49,7 +49,7 @@
                             07:00 Pm - 07:00 Am
                         </label>
                     </div>
-                @else
+                @elseif($start == '19:00:00')
                     <div class="form-check">
                         <input class="form-check-input" type="radio" name="horario_id" id="horario1" value="1">
                         <label class="form-check-label" for="horario1">
@@ -63,7 +63,7 @@
                         </label>
                     </div>
                 @endif
-            </div>
+            </div> --}}
 
             {!! Form::submit('Editar empleado', ['class' => 'btn btn-primary']) !!}
 

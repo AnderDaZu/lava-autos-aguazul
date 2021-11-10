@@ -11,36 +11,67 @@
         <div class="card-body">
             {!! Form::open(['route' => 'admin.agendas.store', 'autocomplete' => 'off']) !!}
 
-                {{-- <div class="form-group">
-                    {!! Form::label('horario_id', 'Horario laboral') !!}
-                    <br>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="horario_id" id="horario1" value="1" checked>
-                        <label class="form-check-label" for="horario1">
-                            07:00 Am - 07:00 Pm
-                        </label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="horario_id" id="horario2" value="2">
-                        <label class="form-check-label" for="horario2">
-                            07:00 Pm - 07:00 Am
-                        </label>
-                    </div>
-                </div> --}}
+            <div class="form-group">
+                @if (session('info'))
+                    <span class="text-danger">{{ session('info') }}</span>
+                @endif
+            </div>
 
-                <div class="form-group">
-                    {!! Form::label('start_date', 'Fecha inicio') !!}
-                    {!! Form::date('start_date', null, ['class' => 'form-control']) !!}
-                </div>
+            <div class="row form-group">
+                {!! Form::label('employee_id', 'Empleado', ['class' => 'ml-2 col-md-4 form-control']) !!}
+                <select name="employee_id" class="ml-4 col-md-6 form-control">
+                    @foreach ($users as $user)
+                        <option value="{{ $user->id }}">{{ $user->name }} {{ $user->last_name }}</option>
+                    @endforeach
+                </select>
+                @error('employee_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-                <div class="form-group">
-                    {!! Form::label('end_date', 'Fecha Fin') !!}
-                    {!! Form::date('end_date', null, ['class' => 'form-control']) !!}
-                </div>
+            <div class=" row form-group">
+                {!! Form::label('start_date', 'Fecha Inicio', ['class' => 'ml-2 col-md-4 form-control']) !!}
+                {!! Form::date('start_date', null, ['class' => 'ml-4 col-md-6 form-control', 'min' => $fechaActual, 'max' => $fechaFin]) !!}
+                @error('start_date')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
 
-                {!! Form::submit('Crear Agenda', ['class' => 'btn btn-primary']) !!}
+            <div class="row form-group">
+                {!! Form::label('end_date', 'Fecha Final', ['class' => 'ml-2 col-md-4 form-control']) !!}
+                {!! Form::date('end_date', null, ['class' => 'ml-4 col-md-6 form-control', 'min' => $fechaInicioF, 'max' => $fechaFin]) !!}
+                @error('end_date')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            <div class="row form-group">
+                {!! Form::label('horario_id', 'Horario para laborar', ['class' => 'ml-2 col-md-4 form-control']) !!}
+                <select name="horario_id" class="ml-4 col-md-6 form-control">
+                    @foreach ($horarios as $horario)
+                        @if ($horario->start_hour == '07:00:00')
+                            <option value="{{ $horario->id }}">
+                                {{ date('h', strtotime($horario->start_hour)) }} AM -
+                                {{ date('h', strtotime($horario->end_hour)) }} PM</option>
+                        @else
+                            <option value="{{ $horario->id }}">
+                                {{ date('h', strtotime($horario->start_hour)) }} PM -
+                                {{ date('h', strtotime($horario->end_hour)) }} AM</option>
+                        @endif
+                        @error('horario_id')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    @endforeach
+                </select>
+                @error('horario_id')
+                    <span class="text-danger">{{ $message }}</span>
+                @enderror
+            </div>
+
+            {!! Form::submit('Crear Agenda', ['class' => 'btn btn-primary']) !!}
 
             {!! Form::close() !!}
+
         </div>
     </div>
 @stop

@@ -14,6 +14,7 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Tipo</th>
                         <th>Nombre</th>
                         <th>Precio</th>
                         <th colspan="2"></th>
@@ -24,16 +25,17 @@
                     @foreach ($services as $service)
                         <tr>
                             <td>{{ $service->id }}</td>
+                            <td>{{ $service->type->name }}</td>
                             <td>{{ $service->name }}</td>
                             <td>{{ $service->price }}</td>
                             <td width="10px">
-                                {{-- @can('admin.services.edit') --}}
+                                @can('admin.services.edit')
                                     <a class="btn btn-primary btn-sm"
                                         href="{{ route('admin.services.edit', $service) }}">Editar</a>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                             <td width="10px">
-                                {{-- @can('admin.services.destroy') --}}
+                                @can('admin.services.destroy')
                                     <form action="{{ route('admin.services.destroy', $service) }}" method="POST">
                                         @csrf
                                         @method('delete')
@@ -41,7 +43,7 @@
                                             Eleminar
                                         </button>
                                     </form>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

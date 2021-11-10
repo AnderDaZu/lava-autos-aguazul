@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UserRequest;
+use App\Models\Admin\Horario;
 
 class EmployeeController extends Controller
 {
@@ -36,7 +37,6 @@ class EmployeeController extends Controller
         $request['password'] = $password;
         
         $employee = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','state_id','user_id'));
-        // $employee = User::create($request->all());
         $employee->roles()->sync(4);
         $name =  $employee->name;
 
@@ -48,31 +48,30 @@ class EmployeeController extends Controller
 
     public function edit(User $employee)
     {
-        $horario_id = $employee->horario_id;
-        return view('admin.employees.edit', compact('employee', 'horario_id'));
+        // $start = $employee->horario->start_hour;
+        return view('admin.employees.edit', compact('employee'));
     }
 
     public function update(Request $request, User $employee)
     {
-
+        $year = date("Y", strtotime(now('Y')."- 15 years"));
         $request->validate([
             'name' => 'required',
             'last_name' => 'required',
-            'birthdate' => "required|date|after:1960-12-31|before:2003-12-31",
+            'birthdate' => "required|date|after:1960-12-31|before:$year-12-31",
             'identification' => "required|min:7|unique:users,identification,$employee->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$employee->id",
-            'state_id' => 'required|integer|min:1|max:2',
-            'horario_id' => 'required|integer|min:1|max:2'
+            'state_id' => 'required|exists:states,id',
         ]);
 
-        $employee->update($request->only('name','last_name','birthdate','identification','phone','email','state_id','horario_id'));
+        $employee->update($request->only('name','last_name','birthdate','identification','phone','email','state_id'));
 
         $name = $employee->name;
 
         toast("Empleado $name, ha sido actualizado correctamente",'success');
 
-        return redirect()->route('admin.employees.edit', $employee);
+        return redirect()->route('admin.employees.index');
     }
 
     public function destroy(User $employee)

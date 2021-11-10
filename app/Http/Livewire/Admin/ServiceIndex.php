@@ -15,10 +15,14 @@ class ServiceIndex extends Component
 
     public $search; 
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {
         $services = Service::where('name','LIKE','%'.$this->search.'%')
-                        ->latest('id')
+                        ->orderBy('type_id')
                         ->paginate(10);
 
         return view('livewire.admin.service-index', compact('services'));

@@ -29,13 +29,13 @@
                             <td>{{ $modelcar->mark->name }}</td>
                             <td>{{ $modelcar->type->name }}</td>
                             <td width="10px">
-                                {{-- @can('admin.modelcars.edit') --}}
+                                @can('admin.modelcars.edit')
                                     <a class="btn btn-primary btn-sm"
                                         href="{{ route('admin.modelcars.edit', $modelcar) }}">Editar</a>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                             <td width="10px">
-                                {{-- @can('admin.modelcars.destroy') --}}
+                                @can('admin.modelcars.destroy')
                                     <form action="{{ route('admin.modelcars.destroy', $modelcar) }}" method="POST">
                                         @csrf
                                         @method('delete')
@@ -43,7 +43,7 @@
                                             Eleminar
                                         </button>
                                     </form>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -51,9 +51,9 @@
 
             </table>
         </div>
-        {{-- <div class="card-footer">
-            {{ $types->links() }}
-        </div> --}}
+        <div class="card-footer">
+            {{ $modelcars->links() }}
+        </div>
     @else
         <div class="card-body">
             No hay líneas registradas

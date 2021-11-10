@@ -24,7 +24,7 @@
                     @foreach ($users as $user)
                         <tr>
                             <td>{{ $user->id }}</td>
-                            <td>{{ $user->name }}</td>
+                            <td>{{ $user->name }} {{ $user->last_name }}</td>
                             <td>{{ $user->email }}</td>
                             <td>{{ $user->phone }}</td>
                             @if ($user->state_id == 1)
@@ -32,13 +32,19 @@
                             @elseif($user->state_id == 2)
                                 <td>Inactivo</td>
                             @endif
-                            <td width="10px"><a class="btn btn-primary btn-sm" href="{{ route('admin.users.edit', $user) }}">Editar</a></td>
                             <td width="10px">
-                                <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button class="btn btn-danger btn-sm" type="submit">Eleminar</button>
-                                </form>
+                                @can('admin.users.edit')
+                                    <a class="btn btn-primary btn-sm" href="{{ route('admin.users.edit', $user) }}">Editar</a>
+                                @endcan
+                            </td>
+                            <td width="10px">
+                                @can('admin.users.destroy')
+                                    <form action="{{ route('admin.users.destroy', $user) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="btn btn-danger btn-sm" type="submit">Eleminar</button>
+                                    </form>
+                                @endcan
                             </td>
                         </tr>
                     @endforeach

@@ -23,6 +23,21 @@ class DatabaseSeeder extends Seeder
         
         $this->call(UserSeeder::class);
 
+        $this->call(MarkSeeder::class);
+
+        $this->call(TypeSeeder::class);
+
+        $this->call(AgendaSeeder::class);
+
+        $this->call(ColorSeeder::class);
+
+        $this->call(ModelcarSeeder::class);
+
+        $this->call(VehicleSeeder::class);
+
+        $this->call(ServiceSeeder::class);
+
+        $this->call(AppointmentSeeder::class);
 
     }
 }

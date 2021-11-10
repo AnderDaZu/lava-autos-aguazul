@@ -9,6 +9,14 @@ use Illuminate\Http\Request;
 
 class TypeController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:admin.types.index')->only('index');
+        $this->middleware('can:admin.types.create')->only('create', 'store');
+        $this->middleware('can:admin.types.edit')->only('edit', 'update');
+        $this->middleware('can:admin.types.destroy')->only('destroy');
+    }
+
     public function index()
     {
         $types = Type::all();

@@ -23,16 +23,17 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
+        $year = date("Y", strtotime(now('Y')."- 15 years"));
         $rules = [
             'user_name' => 'required|unique:users',
             'name' => 'required',
             'last_name' => 'required',
-            'birthdate' => "required|date|after:1960-12-31|before:2003-12-31",
+            'birthdate' => "required|date|after:1960-12-31|before:$year-12-31",
             'identification' => 'required|unique:users',
             'phone' => 'required|min:10|max:10',
             'email' => 'required|email|unique:users',
             'password' => 'required',
-            'state_id' => 'required|integer|min:1|max:2'
+            'state_id' => 'required|exists:states,id'
         ];
 
         return $rules;

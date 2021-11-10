@@ -25,13 +25,13 @@
                             <td>{{ $type->id }}</td>
                             <td>{{ $type->name }}</td>
                             <td width="10px">
-                                {{-- @can('admin.types.edit') --}}
+                                @can('admin.types.edit')
                                     <a class="btn btn-primary btn-sm"
                                         href="{{ route('admin.types.edit', $type) }}">Editar</a>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                             <td width="10px">
-                                {{-- @can('admin.types.destroy') --}}
+                                @can('admin.types.destroy')
                                     <form action="{{ route('admin.types.destroy', $type) }}" method="POST">
                                         @csrf
                                         @method('delete')
@@ -39,7 +39,7 @@
                                             Eleminar
                                         </button>
                                     </form>
-                                {{-- @endcan --}}
+                                @endcan
                             </td>
                         </tr>
                     @endforeach
@@ -47,9 +47,9 @@
 
             </table>
         </div>
-        {{-- <div class="card-footer">
+        <div class="card-footer">
             {{ $types->links() }}
-        </div> --}}
+        </div>
     @else
         <div class="card-body">
             No hay tipos de vehículos registrados

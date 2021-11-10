@@ -15,6 +15,10 @@ class EmployeeIndex extends Component
 
     public $search;
 
+    public function updatingSearch(){
+        $this->resetPage();
+    }
+
     public function render()
     {
         $employees = User::role('employee')
