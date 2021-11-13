@@ -10,7 +10,11 @@ class AppointmentObserver
     public function creating(Appointment $appointment)
     {
         if (! \App::runningInConsole()) {
-            $appointment->client_id = auth()->user()->id;
+            if ( auth()->user()->roles[0]['name'] === 'user' ) {
+                $appointment->client_id = auth()->user()->id;
+            }else if( auth()->user()->roles[0]['name'] === 'yard_manager' ){
+                $appointment->client_id = null;
+            }
         }
     }
 

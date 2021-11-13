@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\UserController as UserApiV1;
 use App\Http\Controllers\Api\v1\user\AppointmentController;
 use App\Http\Controllers\Api\v1\user\VehicleController;
+use App\Http\Controllers\Api\v1\yardManager\AppointmentController as YardManagerAppointmentController;
 use App\Models\Api\v1\Appointment;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -32,6 +33,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::apiResource('v1/vehicles', VehicleController::class)->only(['index', 'store', 'update']);
 
-    Route::apiResource('v1/appointments', AppointmentController::class)->only(['index', 'store']);
+    Route::apiResource('v1/appointments', AppointmentController::class)->only(['index', 'store', 'show', 'update']);
+
+    Route::apiResource('v1/yard-manager', YardManagerAppointmentController::class)->only(['index', 'store']);
 
 });
