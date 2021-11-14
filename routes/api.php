@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\UserController as UserApiV1;
 use App\Http\Controllers\Api\v1\user\AppointmentController;
 use App\Http\Controllers\Api\v1\user\VehicleController;
 use App\Http\Controllers\Api\v1\yardManager\AppointmentController as YardManagerAppointmentController;
+use App\Http\Controllers\Api\v1\yardManager\TaskController;
 use App\Http\Controllers\Api\v1\yardManager\VehicleController as YardManagerVehicleController;
 use App\Models\Api\v1\Appointment;
 use Illuminate\Http\Request;
@@ -32,12 +33,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('user', [UserApiV1::class, 'getAuthenticatedUser']);
     Route::get('logout', [UserApiV1::class, 'logout']);
 
-    Route::apiResource('v1/vehicles-user', VehicleController::class)->only(['index', 'store', 'update']);
+    Route::apiResource('v1/vehicles-user', VehicleController::class)->names('user.vehicles')->only(['index', 'store', 'show', 'update']);
 
-    Route::apiResource('v1/appointments-user', AppointmentController::class)->only(['index', 'store', 'show', 'update']);
+    Route::apiResource('v1/appointments-user', AppointmentController::class)->names('user.appointments')->only(['index', 'store', 'show', 'update']);
 
-    Route::apiResource('v1/appointments-yard-manager', YardManagerAppointmentController::class)->only(['index', 'store']);
+    Route::apiResource('v1/appointments-yard-manager', YardManagerAppointmentController::class)->names('yard.appointments')->only(['index', 'store', 'show', 'update']);
 
-    Route::apiResource('v1/vehicles-yard-manager', YardManagerVehicleController::class)->only(['index', 'store']);
+    Route::apiResource('v1/vehicles-yard-manager', YardManagerVehicleController::class)->names('yard.vehicles')->only(['index', 'store', 'update']);
+
+    Route::apiResource('v1/tasks-yard-manager', TaskController::class)->names('yard.tasks')->only(['index', 'store']);
 
 });

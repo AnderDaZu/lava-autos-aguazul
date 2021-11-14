@@ -16,20 +16,21 @@ class CreateTasksTable extends Migration
         Schema::create('tasks', function (Blueprint $table) {
             $table->id();
 
+            $table->decimal('price');
             $table->text('stocktaking');
-            $table->date('date');
+            // $table->date('date');
             $table->time('end_task');
             $table->boolean('started');
             $table->boolean('finished');
             $table->unsignedBigInteger('appointment_id');
-            $table->unsignedBigInteger('yardManager_id')->nullable();
+            // $table->unsignedBigInteger('yardManager_id')->nullable();
 
             $table->foreign('appointment_id')
                     ->references('id')->on('appointments')
                     ->onDelete('cascade');
-            $table->foreign('yardManager_id')
-                    ->references('id')->on('users')
-                    ->onDelete('set null');
+            // $table->foreign('yardManager_id')
+            //         ->references('id')->on('users')
+            //         ->onDelete('set null');
 
             $table->timestamps();
         });

@@ -12,6 +12,14 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:user.appointments.index')->only('index', 'show');
+        $this->middleware('can:user.appointments.create')->only('store');
+        $this->middleware('can:user.appointments.edit')->only('update');
+
+    }
+
     public function index()
     {
         $appointments = Appointment::select('date', 'hour', 'agendas.start_date', 'agendas.end_date', 'horarios.start_hour', 'horarios.end_hour', 'users.name', 'users.last_name', 'services.duration')
@@ -41,7 +49,7 @@ class AppointmentController extends Controller
         //     ->where([['users.id', '=', $emploeyee_id], ['appointments.date', '>=', $date_today], ['states.name', '=', 'Activo'], ['appointments.client_id', '!=', null]])
         //     ->get();
 
-        // return response()->json(['citas' => $employee_appointments], 200);
+        return response()->json(['citas' => $appointments], 200);
 
     }
 
@@ -433,8 +441,9 @@ class AppointmentController extends Controller
         if ( $appointment['state_id'] === 1 ) {
             $appointment->update($request->only('state_id'));
             return response()->json(['message' => 'Se cancelo la cita correctamente'], 200);
+        }else{
+            return response()->json(['message' => 'No se pudo actualizar cita']);
         }
-        return response()->json(['message' => ''], 200);
     }
 
 }

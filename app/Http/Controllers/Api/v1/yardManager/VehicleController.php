@@ -3,63 +3,50 @@
 namespace App\Http\Controllers\Api\v1\yardManager;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\YardVehicleResource;
 use App\Models\Api\v1\Vehicle;
 use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:yard.vehicles.index')->only('index');
+        $this->middleware('can:yard.vehicles.create')->only('store');
+        $this->middleware('can:yard.vehicles.edit')->only('update');
+
+    }
+
     public function index()
     {
-        //
+        $vehicles = Vehicle::where('client_id', '=', null)->get();
+        return YardVehicleResource::collection($vehicles);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'plate' => 'required|max:6',
+            'color_id' => 'required|exists:colors,id',
+            'modelcar_id' => 'required|exists:modelcars,id'
+        ]);
+
+        $vehicle = Vehicle::create($request->only('plate','color_id','modelcar_id'));
+
+        return response()->json(['message'=>'Vehículo creado correctamente'], 201);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Models\Api\v1\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function show(Vehicle $vehicle)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Api\v1\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Vehicle $vehicle)
     {
-        //
+        $request->validate([
+            'plate' => 'required|max:6',
+            'color_id' => 'required|exists:colors,id',
+            'modelcar_id' => 'required|exists:modelcars,id'
+        ]);
+        $vehicle->update($request->only('plate', 'color_id', 'modelcar_id'));
+        
+        return response()->json(['message'=>'Vehículo actualizado correctamente'], 201);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Models\Api\v1\Vehicle  $vehicle
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Vehicle $vehicle)
-    {
-        //
-    }
 }

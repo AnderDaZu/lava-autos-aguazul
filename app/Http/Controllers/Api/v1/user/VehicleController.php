@@ -9,6 +9,15 @@ use Illuminate\Http\Request;
 
 class VehicleController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('can:user.vehicles.index')->only('index', 'show');
+        $this->middleware('can:user.vehicles.create')->only('store');
+        $this->middleware('can:user.vehicles.edit')->only('update');
+
+    }
+
     public function index()
     {
         $id = auth()->user()->id;
@@ -29,11 +38,6 @@ class VehicleController extends Controller
         return response()->json(['message'=>'Vehículo creado correctamente'], 201);
     }
 
-    public function show(Vehicle $vehicle)
-    {
-        //
-    }
-
     public function update(Request $request, Vehicle $vehicle)
     {
         $request->validate([
@@ -48,8 +52,4 @@ class VehicleController extends Controller
 
     }
 
-    public function destroy(Vehicle $vehicle)
-    {
-        //
-    }
 }

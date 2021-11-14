@@ -68,5 +68,24 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'admin.types.create'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.types.edit'])->syncRoles([$role1, $role2]);
         Permission::create(['name' => 'admin.types.destroy'])->syncRoles([$role1]);
+
+        // Usuarios - Clientes 
+
+        Permission::create(['name' => 'user.appointments.index'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.store'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.show'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.update'])->syncRoles([$role5]);
+
+        Permission::create(['name' => 'user.vehicles.index'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.vehicles.store'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.vehicles.show'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.vehicles.update'])->syncRoles([$role5]);
+
+        // Jefes de patio
+
+        Permission::create(['name' => 'yard.appointments.index'])->syncRoles([$role3]);
+        // Permission::create(['name' => 'yard.appointments.create'])->syncRoles([$role1, $role2]);
+        // Permission::create(['name' => 'yard.appointments.edit'])->syncRoles([$role1, $role2]);
+        // Permission::create(['name' => 'yard.appointments.destroy'])->syncRoles([$role1]);
     }
 }

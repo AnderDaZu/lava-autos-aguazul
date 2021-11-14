@@ -19,7 +19,7 @@ class CreateVehiclesTable extends Migration
             $table->string('plate');
             $table->unsignedBigInteger('color_id')->nullable();
             $table->unsignedBigInteger('modelcar_id')->nullable();
-            $table->unsignedBigInteger('client_id');
+            $table->unsignedBigInteger('client_id')->nullable();
 
             $table->foreign('color_id')
                     ->references('id')->on('colors')
@@ -31,7 +31,7 @@ class CreateVehiclesTable extends Migration
                     
             $table->foreign('client_id')
                     ->references('id')->on('users')
-                    ->onDelete('cascade');
+                    ->onDelete('set null');
 
             $table->timestamps();
         });

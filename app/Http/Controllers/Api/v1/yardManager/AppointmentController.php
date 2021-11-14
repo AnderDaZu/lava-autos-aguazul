@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class AppointmentController extends Controller 
 {
+    public function __construct()
+    {
+        $this->middleware('can:yard.appointments.index')->only('index');
+        $this->middleware('can:yard.appointments.create')->only('store');
+    }
+
     public function index()
     {
         $appointments = Appointment::select('date', 'hour', 'agendas.start_date', 'agendas.end_date', 'horarios.start_hour', 'horarios.end_hour', 'users.name', 'users.last_name', 'services.duration')
@@ -37,16 +43,36 @@ class AppointmentController extends Controller
 
     public function show(Appointment $appointment)
     {
-        //
+        $appointment_query = Appointment::select('vehicles.plate', 'users.name', 'users.last_name', 'services.price')
+            ->join('services', 'services.id', '=', 'appointments.service_id')
+            ->join('vehicles', 'vehicles.id', '=', 'appointments.vehicle_id')
+            ->join('agendas', 'agendas.id', '=', 'appointments.agenda_id')
+            ->join('users', 'users.id', '=', 'employee_id')
+            ->where('appointments.id', '=', $appointment['id'])
+            ->get();
+        $appointment_client = [
+            'date' => $appointment['date'],
+            'hour' => $appointment['hour'],
+            'plate' => $appointment_query[0]['plate'],
+            'employee' => $appointment_query[0]['name']." ".$appointment_query[0]['last_name'],
+            'price' => $appointment_query[0]['price'],
+        ];
+        return response()->json($appointment_client, 200);
+        
     }
 
     public function update(Request $request, Appointment $appointment)
     {
-        //
+        $request->validate([
+            'state_id' => 'required|exists:states,id'
+        ]);
+
+        if ( $appointment['state_id'] === 1 ) {
+            $appointment->update($request->only('state_id'));
+            return response()->json(['message' => 'Se cancelo la cita correctamente'], 200);
+        }else{
+            return response()->json(['message' => 'No se pudo actualizar cita']);
+        }
     }
 
-    public function destroy(Appointment $appointment)
-    {
-        //
-    }
 }
