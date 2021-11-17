@@ -116,7 +116,7 @@ class AppointmentController extends Controller
             
             for ($i = 0; $i < sizeof($appointments) ; $i++) { 
 
-                if ( ( $request['agenda_id'] === $appointments[$i]['agenda_id'] ) ) {
+                // if ( ( $request['agenda_id'] === $appointments[$i]['agenda_id'] ) ) {
                     // duración de las citas agendadas
                     $dur = $appointments[$i]['duration'];
                     $appointment_end = date('H:i:s', strtotime($appointments[$i]['hour']." + $dur minute"));
@@ -126,15 +126,16 @@ class AppointmentController extends Controller
                     }
         
                     $information[$i] = ['hora inicio' => $request['hour'], 'hora fin' => $request_hour_end, "id agenda" => $appointments[$i]['agenda_id'],"inicio cita $i" => $appointments[$i]['hour'], "fin cita $i" => $appointment_end, 'contador' => $count_appointments];
-                    
-                }
+            
+                // }
             }
+            // return $appointments;
 
         }else if( $agenda[0]['start_hour'] === '19:00:00' ){
 
             for ($i = 0; $i < sizeof($appointments) ; $i++) { 
 
-                if ( ( $request['agenda_id'] === $appointments[$i]['agenda_id'] ) ) {
+                // if ( ( $request['agenda_id'] === $appointments[$i]['agenda_id'] ) ) {
                     
                     // duración de las citas agendadas
                     $dur = $appointments[$i]['duration'];
@@ -160,11 +161,13 @@ class AppointmentController extends Controller
 
                     $information[$i] = ['hora inicio' => $request['hour'], 'hora fin' => $request_hour_end, "id agenda" => $appointments[$i]['agenda_id'],"inicio cita $i" => $appointments[$i]['hour'], "fin cita $i" => $appointment_end, 'contador' => $count_appointments];
 
-                }
+                // }
                 
             }
 
         }
+
+        // return $count_appointments;
 
         // Devuelve si ya hay dos o más citas agendadas en el mismo día y horario
         if ($count_appointments >= 2) {
@@ -198,7 +201,7 @@ class AppointmentController extends Controller
                                 $citas = [];
                                 $can_assign = 0;
 
-                                for ($i=0; $i < sizeof($employee_appointments); $i++) { 
+                                for ($i=0; $i < sizeof($employee_appointments); $i++) {
                                             
                                     $appointment_hour_start = $employee_appointments[$i]['hour'];
                                     $appointment_duration = $employee_appointments[$i]['duration'];

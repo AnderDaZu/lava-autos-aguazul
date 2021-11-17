@@ -39,7 +39,7 @@
                                 <td>
                                     @if ( $agenda->end_date <= date('Y-m-d', strtotime(now())) && $agenda->end_hour < date('H:i:s') )
                                         <span class="bg-secondary p-2 rounded-pill">Finalizada</span>
-                                    @elseif ($agenda->start_date <= date('Y-m-d', strtotime(now())) && $agenda->end_date >= date('Y-m-d', strtotime(now())))
+                                    @elseif ( ( $agenda->start_date <= date('Y-m-d', strtotime(now())) ) && ( $agenda->end_date >= date('Y-m-d', strtotime(now())) ) &&  ( $agenda->horario->start_hour <= date('H:i:s') ) )
                                         <span class="bg-success p-2 rounded-pill">En Proceso</span>
                                     @else    
                                         <span class="bg-info p-2 rounded-pill">Pendiente</span>
