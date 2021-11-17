@@ -38,11 +38,11 @@
 
     #First rewrite any request to the wrong domain to use the correct one (here www.)
     RewriteCond %{HTTP_HOST} ^www\.
-    RewriteRule ^(.*)$ https://lava-coches-aguazul.herokuapp.com//$1 [L,R=301]
+    RewriteRule ^(.*)$ https://lava-coches-aguazul.herokuapp.com/$1 [L,R=301]
 
     #Now, rewrite to HTTPS:
     RewriteCond %{HTTPS} off
-    RewriteRule ^(.*)$ https://lava-coches-aguazul.herokuapp.com//$1 [L,R=301]
+    RewriteRule ^(.*)$ https://lava-coches-aguazul.herokuapp.com/$1 [L,R=301]
 
     # Redirect Trailing Slashes If Not A Folder...
     RewriteCond %{REQUEST_FILENAME} !-d
