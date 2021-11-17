@@ -51,8 +51,8 @@ return [
     | your application so that it is used when running Artisan tasks.
     |
     */
-    'url' => env('APP_URL', 'https://lava-coches-aguazul.herokuapp.com'),
-    // 'url' => env('APP_URL', 'http://localhost'),
+    // 'url' => env('APP_URL', 'https://lava-coches-aguazul.herokuapp.com'),
+    'url' => env('APP_URL', 'https://localhost'),
 
     'asset_url' => env('ASSET_URL', null),
 
