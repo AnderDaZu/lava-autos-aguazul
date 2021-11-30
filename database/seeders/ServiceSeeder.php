@@ -25,21 +25,21 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado y polichado',
             'price' => 8000,
-            'duration' => '60',
+            'duration' => '90',
             'type_id' => 1,
         ]);
 
         Service::create([
             'name' => 'Lavado',
             'price' => 10000,
-            'duration' => '60',
+            'duration' => '90',
             'type_id' => 2,
         ]);
 
         Service::create([
             'name' => 'Lavado y polichado',
             'price' => 12000,
-            'duration' => '75',
+            'duration' => '90',
             'type_id' => 2,
         ]);
 
@@ -54,7 +54,7 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado integral',
             'price' => 14000,
-            'duration' => '105',
+            'duration' => '135',
             'type_id' => 3,
         ]);
 
@@ -75,21 +75,21 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado general y polichado',
             'price' => 35000,
-            'duration' => '165',
+            'duration' => '180',
             'type_id' => 3,
         ]);
 
         Service::create([
             'name' => 'Lavado de cojinería',
             'price' => 35000,
-            'duration' => '195',
+            'duration' => '180',
             'type_id' => 3,
         ]);
 
         Service::create([
             'name' => 'Desmanchado de cojinería',
             'price' => 45000,
-            'duration' => '255',
+            'duration' => '270',
             'type_id' => 3,
         ]);
 
@@ -104,14 +104,14 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Enjuague',
             'price' => 12000,
-            'duration' => '55',
+            'duration' => '45',
             'type_id' => 4,
         ]);
 
         Service::create([
             'name' => 'Lavado integral',
             'price' => 16000,
-            'duration' => '105',
+            'duration' => '135',
             'type_id' => 4,
         ]);
 
@@ -132,21 +132,21 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado general y polichado',
             'price' => 40000,
-            'duration' => '165',
+            'duration' => '180',
             'type_id' => 4,
         ]);
 
         Service::create([
             'name' => 'Lavado de cojinería',
             'price' => 40000,
-            'duration' => '195',
+            'duration' => '180',
             'type_id' => 4,
         ]);
 
         Service::create([
             'name' => 'Desmanchado de cojinería',
             'price' => 50000,
-            'duration' => '255',
+            'duration' => '270',
             'type_id' => 4,
         ]);
 
@@ -161,7 +161,7 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado integral',
             'price' => 60000,
-            'duration' => '165',
+            'duration' => '180',
             'type_id' => 5,
         ]);
 
@@ -176,7 +176,7 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado integral',
             'price' => 70000,
-            'duration' => '195',
+            'duration' => '180',
             'type_id' => 6,
         ]);
 
@@ -184,7 +184,7 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado integral',
             'price' => 60000,
-            'duration' => '195',
+            'duration' => '180',
             'type_id' => 7,
         ]);
 
@@ -199,7 +199,7 @@ class ServiceSeeder extends Seeder
         Service::create([
             'name' => 'Lavado general',
             'price' => 75000,
-            'duration' => '195',
+            'duration' => '180',
             'type_id' => 8,
         ]);
 

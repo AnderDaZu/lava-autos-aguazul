@@ -20,7 +20,8 @@ class AppointmentIndex extends Component
 
     public function render()
     {
-        $appointments = Appointment::select('appointments.id', 'appointments.date', 'appointments.hour', 'users.name', 'users.last_name', 'services.name as service', 'services.duration', 'states.name as state', 'appointments.agenda_id')
+        // $appointments = Appointment::select('appointments.id', 'appointments.date', 'appointments.hour', 'users.name', 'users.last_name', 'services.name as service', 'services.duration', 'states.name as state', 'appointments.agenda_id')
+        $appointments = Appointment::select('appointments.id', 'appointments.date', 'users.name', 'users.last_name', 'services.name as service', 'services.duration', 'states.name as state', 'appointments.agenda_id')
             ->join('agendas', 'agendas.id', '=', 'appointments.agenda_id')
             ->join('users', 'users.id', '=', 'agendas.employee_id')
             ->join('services', 'services.id', '=', 'appointments.service_id')

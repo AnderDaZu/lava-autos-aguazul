@@ -12,10 +12,10 @@ class Service extends Model
 
     protected $fillable = ['name', 'price', 'duration', 'type_id'];
 
-    public function getRouteKeyName()
-    {
-        return 'name';
-    }
+    // public function getRouteKeyName()
+    // {
+    //     return 'name';
+    // }
 
     public function type(){
         return $this->belongsTo(Type::class);

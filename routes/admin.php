@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\MarkController;
 use App\Http\Controllers\Admin\ModelcarController;
+use App\Http\Controllers\Admin\ScheduledSpacesController;
 use App\Http\Controllers\Admin\ServiceController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\YardManagerController;
@@ -36,4 +37,6 @@ Route::resource('agendas', AgendaController::class)->names('admin.agendas')->mid
 
 Route::resource('appointments', AppointmentController::class)->names('admin.appointments')->middleware('active');
 
-URL::forceScheme('https');
+Route::resource('scheduledspaces', ScheduledSpacesController::class)->names('admin.scheduledspaces')->middleware('active');
+
+// URL::forceScheme('https');

@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api\v1\user;
 
 use App\Http\Controllers\Controller;
+use App\Models\Admin\Range;
+use App\Models\Admin\ScheduledSpace;
 use App\Models\Admin\Service;
 use App\Models\Api\v1\Appointment;
 use App\Models\Api\v1\Vehicle;
@@ -24,42 +26,21 @@ class ItemAppointmentController extends Controller
         return response()->json(['data' => $services], 200);
     }
 
-    public function freeTime($service)
+    public function freeTime(Service $service)
     {
-        // Calcula la durarión del servicio seleccionado
-        $queryDuration = Service::select('services.duration')
-            ->where('services.id', '=', $service)
+        $service_duration = $service->duration;
+        $intervals = $service_duration / 45;
+        $espaces = [];
+        $spaces = ScheduledSpace::select('num', 'date', 'ranges.start', 'ranges.end')
+            ->join('ranges', 'ranges.id', '=', 'scheduled_spaces.range_id')
+            ->where( [ [ 'date', '>=', date('Y-m-d') ] ] )
+            ->orderby('date')
+            ->orderby('scheduled_spaces.num')
+            ->orderby('ranges.start')
             ->get();
-        $durationService = $queryDuration[0]['duration'];
-
-
-        $appointments = Appointment::select('appointments.date', 'appointments.hour', 'services.duration', 'horarios.start_hour', 'horarios.end_hour')
-            ->join('services', 'services.id', '=', 'appointments.service_id')
-            ->join('agendas', 'agendas.id', '=', 'appointments.agenda_id')
-            ->join('horarios', 'horarios.id', '=', 'agendas.horario_id')
-            ->where([ [ 'appointments.date', '>=', date('Y-m-d') ] ])
-            ->get();
-
-        $sum = [];
-        $freeleft = [];
-        $freeright = [];
-
-        for ($i=0; $i < sizeof($appointments) ; $i++) {
-            
-            $appointment_hour_end = date('H:i:s', strtotime($appointments[$i]['hour'].'+'.$appointments[$i]['duration'].' minute'));
-            
-            if (  ($appointment_hour_end > date('H:i:s') ) && ( $appointments[$i]['date'] === date('Y-m-d') ) ) {
-                $sum[$i] = $appointments[$i];
-                if ( $appointments[$i]['start_hour'] === '07:00:00' ) {
-                    if ( $appointment_hour_end < $appointments[$i]['end_hour'] ) {
-                        $agenda_end_hour = $appointments[$i]['end_hour'];
-                        // $freeright[$i] = $agenda_end_hour;
-                        $freeright[$i] = date('i', strtotime($agenda_end_hour." - $appointment_hour_end minute"));
-                    }
-                }
-            }
+        for ($i=0; $i < sizeof($spaces) ; $i++) { 
+            $espaces[$i] = ['hora' => $spaces[$i]['start'], 'fecha' => $spaces[$i]['date']];
         }
-
-        return $freeright;
+        return $espaces;
     }
 }

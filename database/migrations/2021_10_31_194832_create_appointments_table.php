@@ -17,7 +17,7 @@ class CreateAppointmentsTable extends Migration
             $table->id();
 
             $table->date('date');
-            $table->time('hour');
+            // $table->time('hour');
             $table->unsignedBigInteger('agenda_id')->nullable();
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('vehicle_id');

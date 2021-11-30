@@ -15,29 +15,29 @@ class UserController extends Controller
 {
     public function authenticate(Request $request)
     {
-    $credentials = $request->only('email', 'password');
-    try {
-        if (! $token = JWTAuth::attempt($credentials)) {
-            return response()->json(['error' => 'invalid_credentials'], 400);
+        $credentials = $request->only('email', 'password');
+        try {
+            if (!$token = JWTAuth::attempt($credentials)) {
+                return response()->json(['error' => 'invalid_credentials'], 400);
+            }
+        } catch (JWTException $e) {
+            return response()->json(['error' => 'could_not_create_token'], 500);
         }
-    } catch (JWTException $e) {
-        return response()->json(['error' => 'could_not_create_token'], 500);
-    }
-    return response()->json(compact('token'));
+        return response()->json(compact('token'));
     }
 
     public function getAuthenticatedUser()
     {
-    try {
-        if (!$user = JWTAuth::parseToken()->authenticate()) {
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
                 return response()->json(['user_not_found'], 404);
-        }
+            }
         } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
-                return response()->json(['token_expired'], $e->getStatusCode());
+            return response()->json(['token_expired'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
-                return response()->json(['token_invalid'], $e->getStatusCode());
+            return response()->json(['token_invalid'], $e->getStatusCode());
         } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
-                return response()->json(['token_absent'], $e->getStatusCode());
+            return response()->json(['token_absent'], $e->getStatusCode());
         }
         $user = [
             'name' => auth()->user()->name,
@@ -45,7 +45,7 @@ class UserController extends Controller
             'email' => auth()->user()->email,
             'role' => auth()->user()->roles[0]['name']
         ];
-        return response()->json([ 'user' => $user ], 200);
+        return response()->json(['user' => $user], 200);
     }
 
 
@@ -59,8 +59,8 @@ class UserController extends Controller
             'password' => 'required|string|min:6|confirmed',
         ]);
 
-        if($validator->fails()){
-                return response()->json($validator->errors()->toJson(), 400);
+        if ($validator->fails()) {
+            return response()->json($validator->errors()->toJson(), 400);
         }
 
         // $lastUser =  User::select('id')->latest('id')->take(1)->get();
@@ -77,13 +77,14 @@ class UserController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user','token'),201);
+        return response()->json(compact('user', 'token'), 201);
     }
 
-    public function logout() {
-        
+    public function logout()
+    {
+
         Auth::guard('api')->logout();
-    
+
         return response()->json([
             'status' => 'success',
             'message' => 'logout'

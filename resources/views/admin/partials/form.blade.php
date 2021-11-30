@@ -1,6 +1,6 @@
 <div class="form-group">
     {!! Form::label('user_name', 'User Name') !!}
-    {!! Form::text('user_name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese user name de administrador']) !!}
+    {!! Form::text('user_name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese user name']) !!}
 
     @error('user_name')
         <span class="text-danger">{{ $message }}</span>
@@ -10,7 +10,7 @@
 
 <div class="form-group">
     {!! Form::label('name', 'Nombres') !!}
-    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese nombres de administrador']) !!}
+    {!! Form::text('name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese nombres']) !!}
 
     @error('name')
         <span class="text-danger">{{ $message }}</span>
@@ -20,7 +20,7 @@
 
 <div class="form-group">
     {!! Form::label('last_name', 'Apellidos') !!}
-    {!! Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese apellidos de administrador']) !!}
+    {!! Form::text('last_name', null, ['class' => 'form-control', 'placeholder' => 'Ingrese apellidos']) !!}
 
     @error('last_name')
         <span class="text-danger">{{ $message }}</span>
@@ -78,7 +78,7 @@
         <i class="input-group-text">
             <i class="fas fa-at"></i>
         </i>
-        {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Ingrese correo de administrador']) !!}
+        {!! Form::text('email', null, ['class' => 'form-control', 'placeholder' => 'Ingrese correo']) !!}
     </div>
 
     @error('email')
