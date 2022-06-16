@@ -17,16 +17,18 @@ class CreateAppointmentsTable extends Migration
             $table->id();
 
             $table->date('date');
-            // $table->time('hour');
-            $table->unsignedBigInteger('agenda_id')->nullable();
+            $table->time('hour_start');
+            $table->time('hour_end');
+
+            $table->unsignedBigInteger('horario_id')->nullable();
             $table->unsignedBigInteger('service_id');
             $table->unsignedBigInteger('vehicle_id');
-        //     $table->unsignedBigInteger('employee_id')->nullable();
+            $table->unsignedBigInteger('employee_id')->nullable();
             $table->unsignedBigInteger('client_id')->nullable();
             $table->unsignedBigInteger('state_id')->nullable();
 
-            $table->foreign('agenda_id')
-                    ->references('id')->on('agendas')
+            $table->foreign('horario_id')
+                    ->references('id')->on('horarios')
                     ->onDelete('set null');
             $table->foreign('service_id')
                     ->references('id')->on('services')
@@ -34,6 +36,9 @@ class CreateAppointmentsTable extends Migration
             $table->foreign('vehicle_id')
                     ->references('id')->on('vehicles')
                     ->onDelete('cascade');
+            $table->foreign('employee_id')
+                    ->references('id')->on('users')
+                    ->onDelete('set null');
             $table->foreign('client_id')
                     ->references('id')->on('users')
                     ->onDelete('set null');

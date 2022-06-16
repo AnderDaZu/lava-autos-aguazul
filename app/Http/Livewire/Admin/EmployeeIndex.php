@@ -26,6 +26,6 @@ class EmployeeIndex extends Component
             ->latest('id')
             ->paginate(10);
 
-        return view('livewire.admin.employee-index', compact('employees'));
+        return view('livewire.admin.employee-index', compact('employees')); 
     }
 } 

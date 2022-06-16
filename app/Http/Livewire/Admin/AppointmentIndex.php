@@ -20,17 +20,18 @@ class AppointmentIndex extends Component
 
     public function render()
     {
-        // $appointments = Appointment::select('appointments.id', 'appointments.date', 'appointments.hour', 'users.name', 'users.last_name', 'services.name as service', 'services.duration', 'states.name as state', 'appointments.agenda_id')
-        $appointments = Appointment::select('appointments.id', 'appointments.date', 'users.name', 'users.last_name', 'services.name as service', 'services.duration', 'states.name as state', 'appointments.agenda_id')
-            ->join('agendas', 'agendas.id', '=', 'appointments.agenda_id')
-            ->join('users', 'users.id', '=', 'agendas.employee_id')
+        $appointments = Appointment::select('appointments.id', 'appointments.date', 'appointments.hour_start', 'appointments.hour_end', 'users.name', 'users.last_name', 'services.name as service', 'durations.duration', 'states.name as state')
             ->join('services', 'services.id', '=', 'appointments.service_id')
+            ->join('durations', 'durations.id', '=', 'services.duration_id')
             ->join('states', 'states.id', '=', 'appointments.state_id')
+            ->join('users', 'users.id', '=', 'appointments.employee_id')
             ->latest('date')
-            ->latest('hour')
+            ->latest('hour_start')
             ->where('appointments.date','LIKE','%'.$this->search.'%')
             ->orWhere('users.name','LIKE','%'.$this->search.'%')
             ->paginate(15);
-        return view('livewire.admin.appointment-index', compact('appointments'));
+        // return view('livewire.admin.appointment-index', compact('appointments'));
+        // $appointments = Appointment::all();
+        return view('livewire.admin.appointment-index', compact('appointments')); 
     }
 }

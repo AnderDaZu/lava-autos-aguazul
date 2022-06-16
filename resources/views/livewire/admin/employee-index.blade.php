@@ -18,7 +18,7 @@
                         <th>email</th>
                         <th>Telefono</th>
                         <th>Estado</th>
-                        <th colspan="2"></th>
+                        <th colspan="3"></th>
                     </tr>
                 </thead>
 
@@ -29,11 +29,32 @@
                             <td>{{ $employee->name }} {{ $employee->last_name }}</td>
                             <td>{{ $employee->email }}</td>
                             <td>{{ $employee->phone }}</td>
+                            
                             @if ($employee->state_id == 1)
                                 <td>Activo</td>
                             @elseif($employee->state_id == 2)
                                 <td>Inactivo</td>
                             @endif
+                            
+                            @if ($employee->horario_id == 1)
+                                <td width="10px">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brightness-2" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#ffbf00" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <circle cx="12" cy="12" r="3" />
+                                    <path d="M6 6h3.5l2.5 -2.5l2.5 2.5h3.5v3.5l2.5 2.5l-2.5 2.5v3.5h-3.5l-2.5 2.5l-2.5 -2.5h-3.5v-3.5l-2.5 -2.5l2.5 -2.5z" />
+                                    </svg>
+                                </td>
+                            @elseif ($employee->horario_id == 2)
+                                <td width="10px">
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-moon" width="20" height="20" viewBox="0 0 24 24" stroke-width="1.5" stroke="#9e9e9e" fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+                                    </svg>
+                                </td>
+                            @else
+                                <td width="10px"></td>  
+                            @endif
+
                             <td width="10px">
                                 @can('admin.employees.edit')
                                     <a class="btn btn-primary btn-sm"

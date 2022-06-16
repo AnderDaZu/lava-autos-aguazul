@@ -13,7 +13,8 @@ class Type extends Model
 
     public function getRouteKeyName()
     {
-        return 'name';
+        return 'id';
+        // return 'name';
     }
 
     // public function Lines(){

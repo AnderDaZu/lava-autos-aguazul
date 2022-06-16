@@ -54,7 +54,7 @@
 
 <div class="form-group">
     <p class="font-weight-bold">Estado</p>
-    <label class="mr-2">
+    <label class="mr-4">
         {!! Form::radio('state_id', 1, true) !!}
         Activo
     </label>

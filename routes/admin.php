@@ -3,19 +3,23 @@
 use App\Http\Controllers\Admin\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdministratorController;
-use App\Http\Controllers\Admin\AgendaController;
+use App\Http\Controllers\Admin\AmountController;
 use App\Http\Controllers\Admin\AppointmentController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\MarkController;
 use App\Http\Controllers\Admin\ModelcarController;
-use App\Http\Controllers\Admin\ScheduledSpacesController;
+use App\Http\Controllers\Admin\PostController;
+use App\Http\Controllers\Admin\ResultEmployeeController;
+use App\Http\Controllers\Admin\ResultServiceController;
 use App\Http\Controllers\Admin\ServiceController;
+use App\Http\Controllers\Admin\SpaceController;
 use App\Http\Controllers\Admin\TypeController;
 use App\Http\Controllers\Admin\YardManagerController;
-use Illuminate\Support\Facades\URL;
 
-Route::get('', [HomeController::class, 'index'])->name('admin.home')->middleware('active');
+Route::get('main', [HomeController::class, 'index'])->name('admin.main')->middleware('active');
+
+// Route::get('', [HomeController::class, 'index'])->name('admin.home');
 
 Route::resource('administrators', AdministratorController::class)->names('admin.administrators');
 
@@ -33,10 +37,24 @@ Route::resource('services', ServiceController::class)->names('admin.services')->
 
 Route::resource('modelcars', ModelcarController::class)->names('admin.modelcars')->middleware('active');
 
-Route::resource('agendas', AgendaController::class)->names('admin.agendas')->middleware('active');
-
 Route::resource('appointments', AppointmentController::class)->names('admin.appointments')->middleware('active');
 
-Route::resource('scheduledspaces', ScheduledSpacesController::class)->names('admin.scheduledspaces')->middleware('active');
+Route::resource('amounts', AmountController::class)->only('index', 'edit', 'update')->names('admin.amounts')->middleware('active');
 
-// URL::forceScheme('https');
+Route::get('spaces', [SpaceController::class, 'index'])->name('admin.spaces.index')->middleware('active');
+
+Route::put('spaces', [SpaceController::class, 'update'])->name('admin.spaces.update')->middleware('active');
+
+Route::resource('posts', PostController::class)->names('admin.posts')->middleware('active'); 
+
+Route::get('result/tasks', [ResultServiceController::class, 'index'])->name('admin.result_tasks');
+
+Route::get('result/tasks/{task}', [ResultServiceController::class, 'show'])->name('admin.result_task');
+
+Route::get('result/unscheduled-tasks', [ResultServiceController::class,'indexUnscheduledTask'])->name('admin.result_unscheduled_tasks');
+
+Route::get('result/unscheduled-tasks/{task}', [ResultServiceController::class,'showUnscheduledTask'])->name('admin.result_unscheduled_task');
+
+Route::get('result/employees', [ResultEmployeeController::class, 'index'])->name('admin.result_employees');
+
+Route::get('result/employees/{employee}', [ResultEmployeeController::class, 'show'])->name('admin.result_employee');

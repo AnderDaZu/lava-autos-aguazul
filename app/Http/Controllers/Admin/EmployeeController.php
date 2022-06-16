@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserEmployeeRequest;
 use Illuminate\Http\Request;
 use App\Models\User;
 use RealRashid\SweetAlert\Facades\Alert;
@@ -30,13 +31,13 @@ class EmployeeController extends Controller
         return view('admin.employees.create');
     }
 
-    public function store(UserRequest $request)
+    public function store(UserEmployeeRequest $request)
     {
 
         $password = bcrypt($request['password']);
         $request['password'] = $password;
         
-        $employee = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password','state_id','user_id'));
+        $employee = User::create($request->only('user_name','name','last_name','birthdate','identification','phone','email','password', 'horario_id', 'state_id','user_id'));
         $employee->roles()->sync(4);
         $name =  $employee->name;
 
@@ -48,7 +49,6 @@ class EmployeeController extends Controller
 
     public function edit(User $employee)
     {
-        // $start = $employee->horario->start_hour;
         return view('admin.employees.edit', compact('employee'));
     }
 
@@ -62,10 +62,11 @@ class EmployeeController extends Controller
             'identification' => "required|min:7|unique:users,identification,$employee->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$employee->id",
+            'horario_id' => 'required|exists:horarios,id',
             'state_id' => 'required|exists:states,id',
         ]);
 
-        $employee->update($request->only('name','last_name','birthdate','identification','phone','email','state_id'));
+        $employee->update($request->only('name','last_name','birthdate','identification','phone','email', 'horario_id', 'state_id'));
 
         $name = $employee->name;
 

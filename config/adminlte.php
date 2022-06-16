@@ -87,9 +87,9 @@ return [
     'layout_boxed' => null,
     // permite tener el menu del dashboard estatico
     'layout_fixed_sidebar' => true,
-    'layout_fixed_navbar' => null,
+    'layout_fixed_navbar' => true,
     'layout_fixed_footer' => null,
-    'layout_dark_mode' => null,
+    'layout_dark_mode' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -195,7 +195,7 @@ return [
     'register_url' => 'register',
     'password_reset_url' => 'password/reset',
     'password_email_url' => 'password/email',
-    'profile_url' => false,
+    'profile_url' => 'user/profile',
 
     /*
     |--------------------------------------------------------------------------
@@ -230,11 +230,11 @@ return [
         [
             'type'         => 'navbar-search',
             'text'         => 'search',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
         [
             'type'         => 'fullscreen-widget',
-            'topnav_right' => true,
+            'topnav_right' => false,
         ],
 
         // Sidebar items:
@@ -280,27 +280,6 @@ return [
             ],
         ],
 
-        // Agendas
-        ['header' => 'AGENDAS'],
-        
-        ['text' => 'Gestionar Agendas',
-        'icon' => 'fas fa-fw fa-calendar-minus',
-        'submenu' => 
-            [
-                [
-                    'text'       => 'Lista de Agendas',
-                    'icon' => 'fas fa-fw fa-clipboard-list',
-                    'active' => ['admin/agendas/index'],
-                    'route'        => 'admin.agendas.index',
-                ],
-                [
-                    'text'       => 'Crear Agenda',
-                    'icon' => 'fas fa-fw fa-calendar-plus',
-                    'route'        => 'admin.agendas.create',
-                ],
-            ],
-        ],
-
         // Servicios
         ['header' => 'SERVICIOS'],
 
@@ -341,24 +320,78 @@ return [
         // citas
         ['header' => 'CITAS'],
 
-        ['text' => 'Citas Agendadas',
-        'icon' => 'far fa-fw fa-list-alt',
-        'active' => ['admin/appointments*'],
-        'route'  => 'admin.appointments.index',
+        ['text' => 'Citas y Configuración',
+        'icon' => 'fab fa-fw fa-mendeley',
+        'submenu' => 
+            [
+                [
+                    'text' => 'Citas Agendadas',
+                    'icon' => 'far fa-fw fa-list-alt',
+                    'active' => ['admin/appointments*'],
+                    'route'  => 'admin.appointments.index',
+                ],
+                [
+                    'text' => 'Actualizar Espacios',
+                    'icon' => 'fas fa-fw fa-edit',
+                    'active' => ['admin/spaces*'],
+                    'route' => 'admin.spaces.index',
+                ],
+                [
+                    'text' => 'Cupo permitido',
+                    'icon' => 'fas fa-fw fa-sort-amount-up',
+                    'active' => ['admin/amounts*'],
+                    'route' => 'admin.amounts.index',
+                ],
+            ],
         ],
 
         ['header' => 'POSTS'],
 
-        ['header' => 'ESTADISTICAS'],
-            [
-                'text'       => 'Servicios Realizados',
-                'icon_color' => 'yellow',
-                'url'        => '#',
+        [
+            'text' => 'Gestionar Posts',
+            'icon' => 'fa-fw fas fa-rss-square',
+            'submenu' => [
+                [
+                    'text' => 'Posts',
+                    'icon' => 'fa-fw fas fa-list-alt',
+                    'active' => ['admin/posts'],
+                    'route'  => 'admin.posts.index',
+                ],
+                [
+                    'text' => 'Crear Post',
+                    'icon' => 'fa-fw fas fa-plus-square',
+                    'active' => ['admin/posts/create'],
+                    'route'  => 'admin.posts.create',
+                ]
             ],
-            [
-                'text'       => 'Desempeño del Personal',
-                'icon_color' => 'blue',
-                'url'        => '#',
+
+        ],
+
+        ['header' => 'RENDIMIENTO'],
+
+        [
+            'text' => 'Servicios y Empleados',
+            'icon' => 'fa-fw fas fa-chart-bar',
+            'submenu' => [
+                [
+                    'text' => 'Servicios Con Cita',
+                    'icon' => 'fa-fw fab fa-servicestack',
+                    'active' => ['admin/result/tasks*'],
+                    'route'  => 'admin.result_tasks',
+                ],
+                [
+                    'text' => 'Servicios Sin Cita',
+                    'icon' => 'fa-fw fab fa-usps',
+                    'active' => ['admin/result/unscheduled_tasks*'],
+                    'route'  => 'admin.result_unscheduled_tasks',
+                ],
+                [
+                    'text' => 'Empleados',
+                    'icon' => 'fa-fw fas fa-user-friends',
+                    'active' => ['admin/result/employees*'],
+                    'route'  => 'admin.result_employees',
+                ]
+            ],
         ],
 
     ],

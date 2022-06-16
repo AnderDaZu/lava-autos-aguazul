@@ -15,7 +15,7 @@ class State extends Model
 
     // relación uno a muchos 
     public function users(){
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class, 'state_id');
     }
 
     public function appointments(){

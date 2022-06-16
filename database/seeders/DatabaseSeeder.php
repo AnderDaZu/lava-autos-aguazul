@@ -19,17 +19,15 @@ class DatabaseSeeder extends Seeder
 
         $this->call(HorarioSeeder::class);
 
-        $this->call(RangeSeeder::class);
-
         $this->call(StateSeeder::class);
+
+        $this->call(DurationSeeder::class);
         
         $this->call(UserSeeder::class);
 
         $this->call(MarkSeeder::class);
 
         $this->call(TypeSeeder::class);
-
-        $this->call(AgendaSeeder::class);
 
         $this->call(ColorSeeder::class);
 
@@ -38,6 +36,10 @@ class DatabaseSeeder extends Seeder
         $this->call(VehicleSeeder::class);
 
         $this->call(ServiceSeeder::class);
+
+        $this->call(AmountSeeder::class);
+
+        $this->call(SpaceSeeder::class);
 
         $this->call(AppointmentSeeder::class);
 

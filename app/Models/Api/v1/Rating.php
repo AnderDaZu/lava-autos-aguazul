@@ -12,6 +12,6 @@ class Rating extends Model
     protected $fillable = ['assessment', 'comment', 'task_id'];
 
     public function task(){
-        return $this->belongsTo(Task::class, 'task_id');
+        return $this->belongsTo(Task::class,);
     }
 }

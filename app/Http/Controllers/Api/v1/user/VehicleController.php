@@ -38,7 +38,12 @@ class VehicleController extends Controller
         return response()->json(['message'=>'Vehículo creado correctamente'], 201);
     }
 
-    public function update(Request $request, Vehicle $vehicle)
+    public function show(Vehicle $vehicles_user)
+    {   
+        return response()->json(["vehicle" => $vehicles_user], 200);
+    }
+
+    public function update(Request $request, Vehicle $vehicles_user)
     {
         $request->validate([
             'plate' => 'required|max:8',
@@ -46,9 +51,9 @@ class VehicleController extends Controller
             'modelcar_id' => 'required|exists:modelcars,id'
         ]);
 
-        $vehicle->update($request->only('plate', 'color_id', 'modelcar_id'));
+        $vehicles_user->update($request->only('plate', 'color_id', 'modelcar_id'));
 
-        return response()->json(['message'=>'Vehículo actualizado correctamente'], 201);
+        return response()->json(['message'=>'Vehículo actualizado correctamente'], 200);
 
     }
 

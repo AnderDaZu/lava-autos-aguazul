@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\User;
-use Spatie\Permission\Models\Role;
 use RealRashid\SweetAlert\Facades\Alert;
 use App\Http\Requests\UserRequest;
-use App\Models\Admin\State;
 
 class AdministratorController extends Controller
 {
@@ -66,13 +64,13 @@ class AdministratorController extends Controller
             'identification' => "required|min:7|unique:users,identification,$administrator->id",
             'phone' => 'required|min:10|max:10',
             'email' => "required|email|unique:users,email,$administrator->id",
-            'state_id' => 'required|integer|exists:states,id' 
+            'state_id' => 'required|integer|exists:states,id', 
         ]);
 
         // $request['password'] = $administrator->password;
         // $request['user_id'] = $administrator->user_id;
 
-        $administrator->update($request->only('name','last_name','birthdate','identification','phone','email','state_id'));
+        $administrator->update($request->only('name','last_name','birthdate','identification','phone','email', 'state_id'));
         $name = $administrator->name;
 
         toast("Administrador $name, ha sido actualizado correctamente",'success');

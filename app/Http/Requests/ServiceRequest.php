@@ -28,7 +28,7 @@ class ServiceRequest extends FormRequest
         $rules = [
             'name' => 'required',
             'price' => 'required|numeric|min:1000',
-            'duration' => 'required',
+            'duration_id' => 'required|exists:durations,id',
             'type_id' => 'required|exists:types,id'
         ];
 

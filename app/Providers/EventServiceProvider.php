@@ -2,18 +2,19 @@
 
 namespace App\Providers;
 
+use App\Models\Admin\Post;
+use App\Models\Api\v1\Appointment;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
-use Illuminate\Support\Facades\Event;
 use App\Models\User;
-use App\Models\Admin\Agenda;
-use App\Models\Api\v1\Appointment;
+use App\Models\Api\v1\Task;
 use App\Models\Api\v1\Vehicle;
-use App\Observers\AgendaObserver;
-use App\Observers\Api\v1\AppointmentObserver;
-use App\Observers\Api\v1\VehicleObserver;
+use App\Observers\AppointmentObserver;
+use App\Observers\PostObserver;
+use App\Observers\TaskObserver;
 use App\Observers\UserObserver;
+use App\Observers\VehicleObserver;
 
 class EventServiceProvider extends ServiceProvider
 {
@@ -36,8 +37,9 @@ class EventServiceProvider extends ServiceProvider
     public function boot()
     {
         User::observe(UserObserver::class);
-        Agenda::observe(AgendaObserver::class);
-        Vehicle::observe(VehicleObserver::class);
         Appointment::observe(AppointmentObserver::class);
+        Vehicle::observe(VehicleObserver::class);
+        Task::observe(TaskObserver::class);
+        Post::observe(PostObserver::class);
     }
 }

@@ -16,7 +16,7 @@
                         <th>Nombre</th>
                         <th>Email</th>
                         <th>Teléfono</th>
-                        <td>Estado</td>
+                        <th>Estado</th>
                         <th colspan="2"></th>
                     </tr>
                 </thead>

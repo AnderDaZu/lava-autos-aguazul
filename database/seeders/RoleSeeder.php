@@ -72,20 +72,30 @@ class RoleSeeder extends Seeder
         // Usuarios - Clientes 
 
         Permission::create(['name' => 'user.appointments.index'])->syncRoles([$role5]);
-        Permission::create(['name' => 'user.appointments.create'])->syncRoles([$role5]);
-        Permission::create(['name' => 'user.appointments.show'])->syncRoles([$role5]);
-        Permission::create(['name' => 'user.appointments.update'])->syncRoles([$role5]);
-
+        Permission::create(['name' => 'user.appointments.vehicles'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.services'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.spaces'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.employees'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.appointments.store'])->syncRoles([$role5]);
         Permission::create(['name' => 'user.vehicles.index'])->syncRoles([$role5]);
         Permission::create(['name' => 'user.vehicles.create'])->syncRoles([$role5]);
         Permission::create(['name' => 'user.vehicles.show'])->syncRoles([$role5]);
         Permission::create(['name' => 'user.vehicles.update'])->syncRoles([$role5]);
+        Permission::create(['name' => 'user.rating.store'])->syncRoles();
+
 
         // Jefes de patio
 
         Permission::create(['name' => 'yard.appointments.index'])->syncRoles([$role3]);
-        // Permission::create(['name' => 'yard.appointments.create'])->syncRoles([$role1, $role2]);
-        // Permission::create(['name' => 'yard.appointments.edit'])->syncRoles([$role1, $role2]);
-        // Permission::create(['name' => 'yard.appointments.destroy'])->syncRoles([$role1]);
+        Permission::create(['name' => 'yard.tasks.index'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.tasks.show'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.tasks.store'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.tasks.update'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.unscheduledtasks.index'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.unscheduledtasks.types'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.unscheduledtasks.employees'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.unscheduledtasks.show'])->syncRoles($role3);
+        Permission::create(['name' => 'yard.unscheduledtasks.store'])->syncRoles($role3);
+        // Permission::create(['name' => ''])->syncRoles();
     }
 }

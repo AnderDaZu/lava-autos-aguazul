@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
-use App\Models\Admin\Agenda;
 use App\Models\Admin\Horario;
+use App\Models\Admin\Post;
 use App\Models\Admin\State;
 use App\Models\Api\v1\Appointment;
 use App\Models\Api\v1\Task;
+use App\Models\Api\v1\UnscheduledTask;
 use App\Models\Api\v1\Vehicle;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -44,7 +45,7 @@ class User extends Authenticatable implements JWTSubject
         'password',
         'state_id', 
         'user_id',
-        // 'horario_id'
+        'horario_id'
     ];
 
     public function getRouteKeyName()
@@ -83,33 +84,45 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     // Relación uno a muchos (inversa)
-    // public function horario(){
-    //     return $this->belongsTo(Horario::class, 'horario_id');
-    // }
+    public function horario(){
+        return $this->belongsTo(Horario::class);
+    }
 
     // Relación uno a muchos (inversa)
     public function state(){
         return $this->belongsTo(State::class, 'state_id');
     }
 
-    public function agendas(){ 
-        return $this->hasMany(Agenda::class, 'admin_id');
+    public function employeeAppointments(){
+        return $this->hasMany(Appointment::class, 'employee_id');
     }
 
-    public function agendasEmployee(){
-        return $this->hasMany(Agenda::class, 'employee_id');
-    }
-
-    public function appointments(){
-        return $this->hasMany(Appointment::class);
+    public function clientAppointments()
+    {
+        return $this->hasMany(Appointment::class, 'client_id');
     }
 
     public function tasks(){
-        return $this->hasMany(Task::class);
+        return $this->hasMany(Task::class, 'yardManager_id');
     }
 
     public function vehicles(){
         return $this->hasMany(Vehicle::class);
+    }
+
+    public function unscheduledTaskEmployees()
+    {
+        return $this->hasMany(UnscheduledTask::class, 'employee_id');
+    }
+
+    public function unscheduledTaskYardManagers()
+    {
+        return $this->hasMany(UnscheduledTask::class, 'yardManager_id');
+    }
+
+    public function posts()
+    {
+        return $this->hasMany(Post::class, 'admin_id');
     }
     
     public function getJWTIdentifier()

@@ -5,7 +5,8 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+        {{-- <title>{{ config('app.name', 'Lava Autos Aguazul') }}</title> --}}
+        <title>Lava Autos Aguazul</title>
 
         <!-- Fonts -->
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap">
@@ -44,4 +45,8 @@
 
         @livewireScripts
     </body>
+
+    <footer>
+        <p class="text-center m-0 py-4 text-lg">Todos los derechos reservados - <span class="font-semibold">Lava Autos Aguazul 2022</span></p>
+    </footer>
 </html>

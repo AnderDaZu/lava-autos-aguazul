@@ -18,9 +18,9 @@
 </div>
 
 <div class="form-group">
-    {!! Form::label('duration', 'Duración del Servicio') !!}
-    {!! Form::select('duration', $durations, null, ['class' => 'form-control']) !!}
-    @error('duration')
+    {!! Form::label('duration_id', 'Duración del Servicio') !!}
+    {!! Form::select('duration_id', $durations, null, ['class' => 'form-control']) !!}
+    @error('duration_id')
         <span class="text-danger">{{ $message }}</span>
     @enderror
 </div>

@@ -10,7 +10,7 @@ class Task extends Model
 {
     use HasFactory; 
 
-    protected $fillable = ['stocktaking', 'date', 'end_task', 'started', 'finished', 'appointment_id', 'yardManager_id'];
+    protected $fillable = ['price', 'stocktaking', 'started', 'finished', 'appointment_id', 'yardManager_id'];
 
     public function appointment(){
         return $this->belongsTo(Appointment::class);
@@ -21,6 +21,6 @@ class Task extends Model
     }
 
     public function rating(){
-        return $this->belongsTo(Rating::class);
+        return $this->hasOne(Rating::class, 'task_id');
     }
 }
