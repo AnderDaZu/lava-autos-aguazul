@@ -27,13 +27,21 @@ class UserController extends Controller
         $token_request = compact('token');
         $token = $token_request['token'];
 
-        $user = [
-            'role' => auth()->user()->roles[0]['name']
-        ];
-
-        return response()->json([$token_request, $user]);
+        $user = auth()->user();
+        $role = $user->roles[0]['name'];
         
-        // return response()->json(compact('token'));
+        if( $user['state_id'] === 1 ){
+            return response()->json([
+                'success' => true,
+                'token' => $token_request['token'], 
+                'role' => $role
+            ], 200);
+        }else{
+            return response()->json([
+                'success' => false,
+                "response" => "Usuario inactivo por no cumplir nuetsros términos y condiciones"
+            ], 401);
+        }
 
     }
 
@@ -56,7 +64,11 @@ class UserController extends Controller
             'email' => auth()->user()->email,
             'role' => auth()->user()->roles[0]['name']
         ];
-        return response()->json(['user' => $user], 200);
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+        ], 200);
     }
 
 
@@ -97,7 +109,7 @@ class UserController extends Controller
         Auth::guard('api')->logout();
 
         return response()->json([
-            'status' => 'success',
+            'success' => true,
             'message' => 'logout'
         ], 200);
     }
