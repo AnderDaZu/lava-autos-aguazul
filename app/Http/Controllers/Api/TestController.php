@@ -14,7 +14,8 @@ class TestController extends Controller
         $posts = Post::all();
         $data = [];
         foreach ($posts as $post) {
-            $data[] = env('APP_URL').Storage::url($post->url_image); 
+            // $data[] = env('APP_URL').Storage::url($post->url_image); 
+            $data[] = Storage::url($post->url_image); 
         }
         return response()->json(["response" => $data], 200);
     }
