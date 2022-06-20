@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\UserController as UserApiV1;
 use App\Http\Controllers\Api\v1\user\AppointmentMorningController;
 use App\Http\Controllers\Api\v1\user\VehicleController;
@@ -76,6 +77,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     
     Route::post('v1/unscheduled-appointments/', [UnscheduledTaskController::class, 'store']);
 });
+
+Route::get('v1/test', [TestController::class, 'index']);
 
 Route::get('v1/posts', [PostController::class, 'index']);
 
