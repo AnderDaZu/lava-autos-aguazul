@@ -5,7 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Admin\Post;
 use Illuminate\Support\Facades\Storage;
-use PhpParser\Node\Expr\Cast\String_;
 
 class PostController extends Controller
 {
@@ -20,6 +19,7 @@ class PostController extends Controller
                 'id' => $post->id,
                 'name' => $post->name,
                 'service' => $post->service->name,
+                'type' => $post->service->type->name,
                 'url_image' => Storage::url($post->url_image),
                 'extract' => $post->extract,
             ];
