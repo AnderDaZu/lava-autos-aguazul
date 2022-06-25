@@ -31,6 +31,7 @@ class UserController extends Controller
         $role = $user->roles[0]['name'];
         
         if( $user['state_id'] === 1 ){
+
             return response()->json([
                 'success' => true,
                 'token' => $token_request['token'], 
@@ -111,6 +112,24 @@ class UserController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'logout'
+        ], 200);
+    }
+
+    public function validate_jwt(){
+        try {
+            if (!$user = JWTAuth::parseToken()->authenticate()) {
+                return response()->json(['user_not_found'], 404);
+            }
+        } catch (Tymon\JWTAuth\Exceptions\TokenExpiredException $e) {
+            return response()->json(['token_expired'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\TokenInvalidException $e) {
+            return response()->json(['token_invalid'], $e->getStatusCode());
+        } catch (Tymon\JWTAuth\Exceptions\JWTException $e) {
+            return response()->json(['token_absent'], $e->getStatusCode());
+        }
+
+        return response()->json([
+            'success' => true
         ], 200);
     }
 }

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\UserController as UserApiV1;
@@ -33,6 +34,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('user', [UserApiV1::class, 'getAuthenticatedUser']);
     Route::get('logout', [UserApiV1::class, 'logout']);
+    Route::get('validate', [UserApiV1::class, 'validate_jwt']);
 
     // Route::apiResource('v1/appointments-user', AppointmentController::class)->names('user.appointments')->only(['index', 'store', 'show', 'update']);
 
@@ -76,6 +78,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('v1/unscheduled-appointments/{unscheduledTask}', [UnscheduledTaskController::class, 'show']);
     
     Route::post('v1/unscheduled-appointments/', [UnscheduledTaskController::class, 'store']);
+
 });
 
 Route::get('v1/test', [TestController::class, 'index']);
