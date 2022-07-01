@@ -9,7 +9,7 @@ use App\Models\User;
 
 class ResultServiceController extends Controller
 {
-    public function index()
+    public function index() 
     {
         $day = date('d');
         $month = date('m');
@@ -17,17 +17,29 @@ class ResultServiceController extends Controller
 
         $tasks = Task::latest('id')->get();
         $unscheduled_tasks = UnscheduledTask::latest('id')->get();
-        
-        // $users = User::where('birthdate', date('Y', strtotime('1998')))->count();
-        
-        // return $users;
 
         return view('admin.resut_tasks.index', compact('tasks', 'unscheduled_tasks'));
     }
 
     public function showTask(Task $task)
     {
-        return view('admin.resut_tasks.show_task', compact('task'));
+        $data = [
+            'id' => $task->id,
+            'price' => $task->price,
+            'stocktaking' => $task->stocktaking,
+            'start' => date('Y-m-d H:i', strtotime($task->started)),
+            'finished' => date('Y-m-d H:i', strtotime($task->finished)),
+            'plate' => $task->appointment->vehicle->plate,
+            'model' => $task->appointment->vehicle->modelcar->name,
+            'mark' => $task->appointment->vehicle->modelcar->mark->name,
+            'color' => $task->appointment->vehicle->color->name,
+            'type' => $task->appointment->vehicle->modelcar->type->name,
+            'client' => $task->appointment->client->name." ".$task->appointment->client->last_name,
+            'employee' => $task->appointment->employee->name." ".$task->appointment->employee->last_name,
+            'yard' => $task->yardManager->name." ".$task->yardManager->last_name,
+        ];
+
+        return view('admin.resut_tasks.show_task', compact('data'));
     }
 
     public function indexUnscheduledTask()

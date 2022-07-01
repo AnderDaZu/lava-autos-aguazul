@@ -24,35 +24,109 @@ class UnscheduledTaskController extends Controller
     public function index()
     {
         $yard_id = auth()->user()->id;
-        $unscheduledTasks = UnscheduledTask::select('services.name', 'unscheduled_tasks.price', 'unscheduled_tasks.plate', 'users.name', 'users.last_name')
-        ->join('services', 'services.id', '=', 'unscheduled_tasks.servicio_id')
-        ->join('users', 'users.id', '=', 'unscheduled_tasks.employee_id')
-        ->where('yardManager_id', $yard_id)
-        ->latest('id')
-        ->get();
+        // $unscheduledTasks = UnscheduledTask::select('services.name', 'unscheduled_tasks.price', 'unscheduled_tasks.plate', 'users.name', 'users.last_name')
+        // ->join('services', 'services.id', '=', 'unscheduled_tasks.servicio_id')
+        // ->join('users', 'users.id', '=', 'unscheduled_tasks.employee_id')
+        // ->where('yardManager_id', $yard_id)
+        // ->latest('unscheduled_tasks.id')
+        // ->get();
 
-        if ( count($unscheduledTasks) > 0 ) {
-            return response()->json(['tareas' => $unscheduledTasks], 200);
+        $unscheduledTasks = UnscheduledTask::where('yardManager_id', $yard_id)->get();
+
+        $data = [];
+
+        foreach ($unscheduledTasks as $task) {
+            $data[] = [
+                'name' => $task->employee->name,
+                'last_name' => $task->employee->last_name,
+                'service' => $task->service->name,
+                'price' => $task->price,
+                'plate' => $task->plate,
+                'type' => $task->type->name,
+                'date' => date('Y-m-d', strtotime($task->finished)),
+                'hour' => date('H:i', strtotime($task->finished)),
+            ];
+        }
+
+        if ( count($data) > 0 ) {
+            return response()->json([
+                'success' => true,
+                'tasks' => $data
+            ], 200);
         }else{
-            return response()->json("Aún no ha registrado servicios completados", 200);
+            return response()->json([
+                "success" => false,
+                "response" => "Aún no ha registrado servicios completados"
+            ], 200);
         }
     }
 
     public function types()
     {
         $types = Type::select('id', 'name')->get();
-        return response()->json(['types' => $types], 200);
+        $data = [];
+        foreach ($types as $type) {
+            $data[] = [
+                'id' => $type->id,
+                'name' => $type->name,
+            ];
+        }
+
+        if (!empty($data)) {
+            return response()->json([
+                'success' => true,
+                'types' => $data
+            ], 200);
+        } else{
+            return response()->json([
+                'success' => true,
+                'message' => "No hay tipo de vehículos registrados"
+            ], 200);
+        }
+
     }
 
     public function servicesAndEmployees(Type $type)
     {
-        $services = Service::select('id', 'name')->where('type_id', $type->id)->get();
+        $services = Service::where('type_id', $type->id)->get();
         $employees = User::role('employee')->where('state_id', 1)->get();
+
+        $data_services = [];
+        $data_employees = [];
+
+        foreach ($services as $service) {
+            $data_services[] = [
+                'id' => $service->id,
+                'name' => $service->name,
+                'price' => $service->price,
+            ];
+        }
+
+        foreach ($employees as $employee) {
+            $data_employees[] = [
+                'id' => $employee->id,
+                'name' => $employee->name,
+                'last_name' => $employee->last_name,
+                'state_id' => $employee->state_id,
+                'profile_photo_url' => $employee->profile_photo_url,
+            ];
+        }
         
         if ( count($employees) ) {
-            return response()->json(["services" => $services, "employees" => $employees, 'type' => $type], 200);            
+            return response()->json([
+                'success' => true,
+                'type' => [
+                    'id' => $type->id,
+                    'name' => $type->name,
+                ],
+                "services" => $data_services, 
+                "employees" => $data_employees, 
+            ], 200);            
         }else {
-            return response()->json("No hay empleados disponibles", 200);
+            return response()->json([
+                'success' => false,
+                'message' => "No hay empleados disponibles"
+            ], 200);
         }
     }
 
@@ -64,6 +138,7 @@ class UnscheduledTaskController extends Controller
             'stocktaking' => 'required|string|min:50',
             'employee_id' => 'required|exists:users,id',
             'servicio_id' => 'required|exists:services,id',
+            'type_id' => 'required|exists:types,id',
         ]);
 
         $time_now = date('Y-m-d H:i:s');
@@ -74,10 +149,15 @@ class UnscheduledTaskController extends Controller
             'stocktaking' => $request->stocktaking,
             'finished' => $time_now,
             'employee_id' => $request->employee_id,
+            'yardManager_id' => auth()->user()->id,
             'servicio_id' => $request->servicio_id,
+            'type_id' => $request->type_id,
         ]);
 
-        return response()->json(['tarea' => $unscheduledTask], 201);
+        return response()->json([
+            'success' => true,
+            'tarea' => "Servicio registrado correctamente."
+        ], 201);
 
     }
 
@@ -94,5 +174,6 @@ class UnscheduledTaskController extends Controller
         ];
 
         return response()->json(['tarea' => $data], 200);
+        
     }
 }

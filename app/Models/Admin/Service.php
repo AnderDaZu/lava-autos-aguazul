@@ -11,6 +11,11 @@ class Service extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     protected $fillable = ['name', 'price', 'duration_id', 'type_id'];
 
     // public function getRouteKeyName()

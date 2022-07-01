@@ -14,6 +14,11 @@ class Appointment extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     // protected $fillable = ['date', 'hour', 'agenda_id', 'service_id', 'vehicle_id', 'client_id', 'state_id'];
     protected $fillable = ['date', 'hour_start', 'hour_end', 'horario_id', 'service_id', 'vehicle_id', 'employee_id', 'client_id', 'state_id'];
 

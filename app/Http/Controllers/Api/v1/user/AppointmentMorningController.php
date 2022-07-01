@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 
 class AppointmentMorningController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('can:user.appointments.index')->only('index');
@@ -26,15 +27,37 @@ class AppointmentMorningController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $appointments = Appointment::where('client_id', $user_id)->get();
-        return response()->json(["citas" => $appointments], 200);
+        $appointments = Appointment::where('client_id', $user_id)
+            ->latest('date')
+            ->latest('hour_end')
+            ->get();
+        return response()->json([
+            'success' => true,
+            "citas" => $appointments
+        ], 200);
     }
     
     public function checkVehicles()
     {
         $user_id = auth()->user()->id;
         $vehicles = Vehicle::where('client_id', $user_id)->get();
-        return response()->json(['cantidad' => count($vehicles), 'vehicles' => $vehicles], 200);
+        $data = [];
+        foreach ($vehicles as $vehicle) {
+            $data[] = [
+                'id' => $vehicle->id,
+                'plate' => $vehicle->plate,
+                'color' => $vehicle->color->name,
+                'mark' => $vehicle->modelcar->mark->name,
+                'model' => $vehicle->modelcar->name,
+                'client' => $vehicle->client->name." ".$vehicle->client->last_name,
+                'client_id' => $vehicle->client_id,
+            ];
+        }
+        return response()->json([
+            'success' => true,
+            'cantidad' => count($vehicles), 
+            'vehicles' => $data
+        ], 200);
     }
 
     public function listServices(Vehicle $vehicle)
@@ -44,8 +67,12 @@ class AppointmentMorningController extends Controller
         // $available = date('H:i:s', strtotime('+10 minute', strtotime('23:44:00')));
         $available = date('H:i', strtotime('+10 minute', strtotime($hour_now)));
 
+        // ********************************************************
         if ( $hour_now > '18:05:00' ) {
-            return response()->json("Para agendar citas, hasta mañana desde las 00:00", 200);
+            return response()->json([
+                'success' => false,
+                'message' => "Para agendar citas, hasta mañana desde las 00:00"
+            ], 200);
         }
         
         $services = Vehicle::select('services.id', 'services.name', 'services.price')
@@ -55,7 +82,21 @@ class AppointmentMorningController extends Controller
             ->where('vehicles.id', $vehicle->id)
             ->get();
 
-        return response()->json([$vehicle, $services], 200);
+        $data = [
+            'id' => $vehicle->id,
+            'plate' => $vehicle->plate,
+            'color' => $vehicle->color->name,
+            'mark' => $vehicle->modelcar->mark->name,
+            'model' => $vehicle->modelcar->name,
+            'client' => $vehicle->client->name." ".$vehicle->client->last_name,
+            'client_id' => $vehicle->client_id,
+        ];
+
+        return response()->json([
+            'success' => true,
+            'vehicle' => $data, 
+            'service' => $services
+        ], 200);
     }
 
     public function checkSpaces(Vehicle $vehicle, Service $service)
@@ -68,7 +109,10 @@ class AppointmentMorningController extends Controller
         $available = date('H:i', strtotime('+10 minute', strtotime(date($hour_now))));
 
         if ( $hour_now > '18:05:00' ) {
-            return response()->json("Para agendar citas, hasta mañana desde las 00:00", 200);
+            return response()->json([
+                'success' => false,
+                'message' => "Para agendar citas, hasta mañana desde las 00:00"
+            ], 200);
         }
 
         // arreglo donde se agregan los espacios disponibles
@@ -111,7 +155,28 @@ class AppointmentMorningController extends Controller
   
         }
 
-        return response()->json([$vehicle, $service, $spaces_available], 200);
+        $data_service = [
+            'id' => $service->id,
+            'name' => $service->name,
+            'price' => $service->price,
+        ];
+
+        $data_vehicle = [
+            'id' => $vehicle->id,
+            'plate' => $vehicle->plate,
+            'color' => $vehicle->color->name,
+            'mark' => $vehicle->modelcar->mark->name,
+            'model' => $vehicle->modelcar->name,
+            'client' => $vehicle->client->name." ".$vehicle->client->last_name,
+            'client_id' => $vehicle->client_id,
+        ];
+
+        return response()->json([
+            'vehicle' => $data_vehicle,
+            'service' => $data_service, 
+            'amount' => count($spaces_available),
+            'spaces' => $spaces_available
+        ], 200);
     }
 
     public function checkEmployees(Vehicle $vehicle, Service $service, Space $space)
@@ -121,7 +186,10 @@ class AppointmentMorningController extends Controller
         // $hour_now = date('H:i:s', strtotime('08:00:00'));
 
         if ( $hour_now > '18:05:00' ) {
-            return response()->json("Para agendar citas, hasta mañana desde las 00:00", 200);
+            return response()->json([
+                'success' => false,
+                'response' => "Para agendar citas, hasta mañana desde las 00:00"
+            ], 200);
         }
 
         // trae horario del espacio y duracion del servicio
@@ -178,16 +246,49 @@ class AppointmentMorningController extends Controller
         }
 
         if ( count($available_employees) == 0 ) {
-            return response()->json("Debes seleccionar otro espacio, este espacio no cuenta con empleados disponibles o tu vehículo ya tiene asignada una cita dentro del rango de la cita que intentas agendar", 200);
+            return response()->json([
+                'success' => false,
+                'response' => "Debes seleccionar otro espacio, este espacio no cuenta con empleados disponibles o tu vehículo ya tiene asignada una cita dentro del rango de la cita que intentas agendar"
+            ], 200);
         }
 
-        return response()->json([$vehicle, $service, $space, $available_employees], 200);
+        $data_service = [
+            'id' => $service->id,
+            'name' => $service->name,
+            'price' => $service->price,
+        ];
+
+        $data_vehicle = [
+            'id' => $vehicle->id,
+            'plate' => $vehicle->plate,
+            'color' => $vehicle->color->name,
+            'mark' => $vehicle->modelcar->mark->name,
+            'model' => $vehicle->modelcar->name,
+            'client' => $vehicle->client->name." ".$vehicle->client->last_name,
+            'client_id' => $vehicle->client_id,
+        ];
+
+        return response()->json([
+            'success' => true,
+            'vehicle' => $data_vehicle, 
+            'service' => $data_service, 
+            'space' => $space, 
+            'employees' => $available_employees
+        ], 200);
         
     }
 
     public function store(Request $request)
     {
         $amounts = Amount::where('active', true)->first();
+
+        $request->validate([
+            'hour_start' => 'required',
+            'hour_end' => 'required',
+            'service_id' => 'required|exists:services,id',
+            'vehicle_id' => 'required|exists:vehicles,id',
+            'employee_id' => 'required|exists:users,id',
+        ]);
 
         $today = date('Y-m-d');
         $hour_now = date('H:i:s');
@@ -197,7 +298,10 @@ class AppointmentMorningController extends Controller
         // $available_date = date('Y-m-d H:i:s', strtotime($available));
 
         if ( $hour_now > '18:05:00' ) {
-            return response()->json("Para agendar citas, hasta mañana desde las 00:00", 200);
+            return response()->json([
+                'success' => false,
+                'response' => "Para agendar citas, hasta mañana desde las 00:00"
+            ], 200);
         }
 
         // trae los datos del espacio a ocupar por la cita
@@ -208,7 +312,10 @@ class AppointmentMorningController extends Controller
         $horario = $space['horario_id'];
 
         if ( $space['start_hour'] < $available ) {
-            return response()->json("Este espacio ya no esta disponible, elige otro", 200);      
+            return response()->json([
+                'success' => false,
+                'response' => "Este espacio ya no esta disponible, elige otro"
+            ], 200);      
         }
 
         $spaces_base = Space::where('horario_id', 1)
@@ -238,7 +345,10 @@ class AppointmentMorningController extends Controller
             if ( count($appointments) > 0 ) {
                 foreach ($appointments as $appointment) {
                     if ( $appointment['hour_start'] < $space['end_hour'] && $appointment['hour_end'] > $space['start_hour'] && ( $appointment['employee_id'] == $request['employee_id'] || $appointment['vehicle_id'] == $request['vehicle_id'] ) ) {
-                        return response()->json("Debes seleccionar otro espacio, este espacio no cuenta con empleados disponibles o tu vehículo ya tiene asignada una cita dentro del rango de la cita que intentas agendar", 200);
+                        return response()->json([
+                            'success' => false,
+                            'response' => "Debes seleccionar otro espacio, este espacio no cuenta con empleados disponibles o tu vehículo ya tiene asignada una cita dentro del rango de la cita que intentas agendar"
+                        ], 200);
                     }
                 }
             }
@@ -260,10 +370,17 @@ class AppointmentMorningController extends Controller
                 $space_base->update(['times_taken' => $space_base['times_taken'] + 1]);
             }
 
-            return response()->json(['message' => 'La cita se creo correctamente', 'appointment' => $appointment], 201);
+            return response()->json([
+                'success' => true,
+                'response' => 'La cita se creo correctamente', 
+                'appointment' => $appointment
+            ], 201);
         
         }else {
-            return response()->json("Este espacio ya no esta disponible, elige otro", 200);
+            return response()->json([
+                'success' => false,
+                'response' => "Este espacio ya no esta disponible, elige otro"
+            ], 200);
         }
     }
 }

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Api\v1\user;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\VehicleResource;
+use App\Models\Admin\Color;
+use App\Models\Admin\Modelcar;
 use App\Models\Api\v1\Vehicle;
 use Illuminate\Http\Request;
 
@@ -22,7 +24,38 @@ class VehicleController extends Controller
     {
         $id = auth()->user()->id;
         $vehicles = Vehicle::where('client_id', $id)->get();
-        return VehicleResource::collection($vehicles);
+        return response()->json([
+            'success' => true,
+            'vehicles' => VehicleResource::collection($vehicles)
+        ]);
+    }
+
+    public function dataHelp(){
+
+        $colors = Color::all();
+        $models = Modelcar::all();
+        $data_model = [];
+        $data_color = [];
+
+        foreach ($models as $model) {
+            $data_model[] = [
+                'id' => $model->id,
+                'model' => $model->name." - ".$model->mark->name
+            ];
+        }
+
+        foreach ($colors as $color) {
+            $data_color[] = [
+                'id' => $color->id,
+                'color' => $color->name,
+            ];
+        }
+
+        return response()->json([
+            'success' => true,
+            'colors' => $data_color,
+            'models' => $data_model
+        ]);
     }
 
     public function store(Request $request)
@@ -35,7 +68,10 @@ class VehicleController extends Controller
 
         $vehicle = Vehicle::create($request->only('plate','color_id','modelcar_id','client_id'));
 
-        return response()->json(['message'=>'Vehículo creado correctamente'], 201);
+        return response()->json([
+            'success' => true,
+            'message'=>'Vehículo creado correctamente'
+        ], 201);
     }
 
     public function show(Vehicle $vehicles_user)
@@ -53,7 +89,10 @@ class VehicleController extends Controller
 
         $vehicles_user->update($request->only('plate', 'color_id', 'modelcar_id'));
 
-        return response()->json(['message'=>'Vehículo actualizado correctamente'], 200);
+        return response()->json([
+            'success' => true,
+            'message'=>'Vehículo actualizado correctamente'
+        ], 200);
 
     }
 

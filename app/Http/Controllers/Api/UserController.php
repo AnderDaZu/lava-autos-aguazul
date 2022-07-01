@@ -60,6 +60,7 @@ class UserController extends Controller
             return response()->json(['token_absent'], $e->getStatusCode());
         }
         $user = [
+            'id' => auth()->user()->id,
             'name' => auth()->user()->name,
             'last_name' => auth()->user()->last_name,
             'email' => auth()->user()->email,

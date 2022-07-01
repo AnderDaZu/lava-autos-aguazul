@@ -23,6 +23,7 @@ class CreateUnscheduledTasksTable extends Migration
             $table->unsignedBigInteger('employee_id')->nullable();
             $table->unsignedBigInteger('yardManager_id')->nullable();
             $table->unsignedBigInteger('servicio_id')->nullable(); 
+            $table->unsignedBigInteger('type_id')->nullable(); 
 
             $table->foreign('employee_id')
                     ->references('id')->on('users')
@@ -34,6 +35,10 @@ class CreateUnscheduledTasksTable extends Migration
 
             $table->foreign('servicio_id')
                     ->references('id')->on('services')
+                    ->onDelete('set null');
+
+            $table->foreign('type_id')
+                    ->references('id')->on('types')
                     ->onDelete('set null');
 
             $table->timestamps();

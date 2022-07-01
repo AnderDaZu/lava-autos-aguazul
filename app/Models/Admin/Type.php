@@ -2,6 +2,7 @@
 
 namespace App\Models\Admin;
 
+use App\Models\Api\v1\UnscheduledTask;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -27,5 +28,10 @@ class Type extends Model
 
     public function services(){
         return $this->hasMany(Service::class, 'type_id');
+    }
+
+    public function unscheduledtask()
+    {
+        return $this->hasMany(UnscheduledTask::class, 'type_id');
     }
 }

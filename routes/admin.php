@@ -49,7 +49,7 @@ Route::resource('posts', PostController::class)->names('admin.posts')->middlewar
 
 Route::get('result/tasks', [ResultServiceController::class, 'index'])->name('admin.result_tasks');
 
-Route::get('result/tasks/{task}', [ResultServiceController::class, 'show'])->name('admin.result_task');
+Route::get('result/tasks/{task}', [ResultServiceController::class, 'showTask'])->name('admin.result_task.show');
 
 Route::get('result/unscheduled-tasks', [ResultServiceController::class,'indexUnscheduledTask'])->name('admin.result_unscheduled_tasks');
 

@@ -12,6 +12,11 @@ class Vehicle extends Model
 {
     use HasFactory; 
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     protected $fillable = ['plate', 'color_id', 'modelcar_id', 'client_id'];
 
     public function color(){

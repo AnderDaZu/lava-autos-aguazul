@@ -33,7 +33,7 @@
                         <th class="text-center">Fecha</th>
                         <th class="text-center">Hora Inicio</th>
                         <th class="text-center">Hora Fin</th>
-                        <th class="text-center">Empleado</th>
+                        <th class="text-center">Empleado(a)</th>
                         <th class="text-center">Servicio</th>
                         <th width="10px"></th>
                     </tr>
@@ -44,11 +44,17 @@
                         <tr>
                             <td class="text-center">{{ $task->appointment->date }}</td>
                             <td class="text-center">{{ date('h:i:s A', strtotime($task->started)) }}</td>
-                            <td class="text-center">{{ date('h:i:s A', strtotime($task->finished)) }}</td>
+                            <td class="text-center">
+                                @if ( !empty( $task->finished) )
+                                    {{ date('h:i:s A', strtotime($task->finished)) }}
+                                @else
+                                    {{ "-- : -- : --" }}
+                                @endif
+                            </td>
                             <td class="text-center">{{ $task->appointment->employee->name }} {{ $task->appointment->employee->last_name }}</td>
                             <td class="text-center">{{ $task->appointment->service->name }}</td>
                             <td>
-                                <a class="btn btn-sm btn-primary" href="{{ route('admin.result_task', $task) }}">Detalle</a>
+                                <a class="btn btn-sm btn-primary" href="{{ route('admin.result_task.show', $task) }}">Detalle</a>
                             </td>
                         </tr>
                     @endforeach

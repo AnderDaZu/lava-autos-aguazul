@@ -22,17 +22,43 @@ class TaskController extends Controller
     public function index() 
     {
         $yard_id = auth()->user()->id;
-        $tasks = Task::select('tasks.id', 'tasks.price', 'tasks.stocktaking', 'tasks.started', 'tasks.finished', 'tasks.appointment_id', 'tasks.yardManager_id', 'services.name as service', 'vehicles.plate', 'modelcars.name')
-        ->join('appointments', 'appointments.id', '=', 'tasks.appointment_id')
-        ->join('services', 'services.id', '=', 'appointments.service_id')
-        ->join('vehicles', 'vehicles.id', '=', 'appointments.vehicle_id')
-        ->join('modelcars', 'modelcars.id', '=', 'vehicles.modelcar_id')
-        ->where('yardManager_id', $yard_id)->latest('id')->latest('id')->get();
+        // $tasks = Task::select('tasks.id', 'tasks.price', 'tasks.stocktaking', 'tasks.started', 'tasks.finished', 'tasks.appointment_id', 'tasks.yardManager_id', 'services.name as service', 'vehicles.plate', 'modelcars.name')
+        // ->join('appointments', 'appointments.id', '=', 'tasks.appointment_id')
+        // ->join('services', 'services.id', '=', 'appointments.service_id')
+        // ->join('vehicles', 'vehicles.id', '=', 'appointments.vehicle_id')
+        // ->join('modelcars', 'modelcars.id', '=', 'vehicles.modelcar_id')
+        // ->where('yardManager_id', $yard_id)->latest('id')->latest('id')
+        // ->get();
+        $tasks = Task::all();
+        $data = [];
+
+        foreach ($tasks as $task) {
+            $data[] = [
+                'id' => $task->id,
+                'price' => $task->price,
+                'stocktaking' => $task->stocktaking,
+                'date' => date('Y-m-d', strtotime($task->started)),
+                'hour' => date('H:i', strtotime($task->started)),
+                'finished' => $task->finished,
+                'appointment_id' => $task->appointment_id,
+                'yard_id' => $task->yardManager_id,
+                'yard_name' => $task->yardManager->name." ".$task->yardManager->last_name,
+                'service' => $task->appointment->service->name,
+                'plate' => $task->appointment->vehicle->plate,
+                'modelcar' => $task->appointment->vehicle->modelcar->name,
+            ];
+        }
 
         if ( count($tasks) > 0 ) {
-            return response()->json($tasks, 200);
+            return response()->json([
+                'success' => true,
+                'tasks' => $data 
+            ], 200);
         }else{
-            return response()->json("Aún no hay servicios iniciados por usted", 200);
+            return response()->json([
+                'success' => false,
+                'message' => "Aún no hay servicios iniciados por usted"
+            ], 200);
         }
     }
 
@@ -49,7 +75,10 @@ class TaskController extends Controller
         $state_appointment = $appointment->state_id;
 
         if ( $state_appointment == 1 ) {   
-            return response()->json("Selecciona una cita sin haber iniciado el servicio.");
+            return response()->json([
+                'success' => false,
+                'message' => "Selecciona una cita sin haber iniciado el servicio."
+            ]);
         }
 
         $started = date('Y-m-d H:i:s');
@@ -63,7 +92,12 @@ class TaskController extends Controller
 
         $appointment->update(['state_id' => 1]);
 
-        return response()->json(["servicio iniciado" => $task, "cita tomadá" => $appointment], 201);
+        return response()->json([
+                'success' => true,
+                'message' => 'Servicio se inicio'
+                // "servicio iniciado" => $task,
+                // "cita tomadá" => $appointment
+            ], 201);
     }
 
 
@@ -88,9 +122,15 @@ class TaskController extends Controller
     {
         if( $task->finished == '' ){
             $task->update(['finished' => date('Y-m-d H:i:s')]);
-            return response()->json(['finalizó' => $task->finished], 200);
+            return response()->json([
+                'success' => true,
+                'finalizó' => $task->finished
+            ], 200);
         }else {
-            return response()->json("Tarea ya se ha finalizadó", 200);
+            return response()->json([
+                'success' => false,
+                'message' => "Tarea ya se ha finalizadó"
+            ], 200);
         }
     }
 

@@ -9,6 +9,11 @@ class Rating extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+
     protected $fillable = ['assessment', 'comment', 'task_id'];
 
     public function task(){

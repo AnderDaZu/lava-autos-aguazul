@@ -18,13 +18,38 @@ class AppointmentController extends Controller
         $appointments = Appointment::where('horario_id', 1)
             ->where('date', date('Y-m-d'))
             ->where('state_id', 2)
-            ->latest('id')
+            // ->latest('')
+            ->orderby('id', 'asc')
         ->get();
 
+        $data = [];
+
+        foreach ($appointments as $appointment) {
+            $data[] = [
+                'id' => $appointment->id,
+                'date' => $appointment->date,
+                'hour_start' => date('H:i', strtotime($appointment->hour_start)),
+                'hour_end' => date('H:i', strtotime($appointment->hour_end)),
+                'service' => $appointment->service->name,
+                'price' => $appointment->service->price,
+                'plate' => $appointment->vehicle->plate,
+                'model' => $appointment->vehicle->modelcar->name,
+                'type' => $appointment->vehicle->modelcar->type->name,
+                'employee' => $appointment->employee->name." ".$appointment->employee->last_name,
+                'client' => $appointment->client->name." ".$appointment->client->last_name,
+            ];
+        }
+
         if ( count($appointments) > 0 ) {
-            return response()->json($appointments, 200);
+            return response()->json([
+                'success' => true,
+                'appointments' => $data
+            ], 200);
         }else{
-            return response()->json("No hay citas agendadas o pendientes.", 200);
+            return response()->json([
+                'success' => false,
+                'message' => "No hay citas agendadas o pendientes."
+            ], 200);
         }
     }
 

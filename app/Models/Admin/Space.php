@@ -9,6 +9,11 @@ class Space extends Model
 {
     use HasFactory;
 
+    protected $hidden = [
+        'created_at',
+        'updated_at',
+    ];
+    
     protected $fillable = ['start_hour', 'end_hour', 'group', 'horario_id', 'duration_id', 'times_taken'];
 
     public function horario()
@@ -19,5 +24,5 @@ class Space extends Model
     public function duration()
     {
         return $this->belongsTo(Duration::class);
-    }
+    } 
 }

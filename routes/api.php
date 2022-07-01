@@ -50,6 +50,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     // Client
 
     Route::apiResource('v1/vehicles-user', VehicleController::class)->names('user.vehicles')->only(['index', 'store', 'show', 'update']);
+    
+    Route::get('v1/vehicles-data', [VehicleController::class, 'dataHelp']);
 
     Route::get('v1/appointment-morning', [AppointmentMorningController::class, 'index']);
 

@@ -24,7 +24,7 @@ class ServiceIndex extends Component
         $services = Service::where('name','LIKE','%'.$this->search.'%')
                         ->orderBy('type_id')
                         ->paginate(10);
-
+        
         return view('livewire.admin.service-index', compact('services'));
     }
 }
