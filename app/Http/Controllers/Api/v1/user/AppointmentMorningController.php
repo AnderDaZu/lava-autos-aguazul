@@ -147,7 +147,16 @@ class AppointmentMorningController extends Controller
             }
 
             if ( $ranges_available == $num_ranges ) {
-                $spaces_available[$cont_spaces] = $space;
+                // $spaces_available[$cont_spaces] = $space;
+                $spaces_available[$cont_spaces] = [
+                    'id' => $space['id'],
+                    'start_hour' => date('H:i', strtotime($space['start_hour'])),
+                    'end_hour' => date('H:i', strtotime($space['end_hour'])),
+                    'group' => $space['group'],
+                    'times_taken' => $space['times_taken'],
+                    'horario_id' => $space['horario_id'],
+                    'duration_id' => $space['duration_id'],
+                ];
                 $cont_spaces++;            
             }
 
