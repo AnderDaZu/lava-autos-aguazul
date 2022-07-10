@@ -13,8 +13,13 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        commands\UpdateSpaces::class,
     ];
+
+    protected function scheduleTimezone()
+    {
+        return 'America/Bogota';
+    }
 
     /**
      * Define the application's command schedule.
@@ -24,6 +29,7 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command('updateSpaces')->dailyAt('15:20');
         // $schedule->command('inspire')->hourly();
     }
 

@@ -18,7 +18,9 @@ class SpaceController extends Controller
      */
     public function index()
     {
-        $spaces = Space::where('horario_id', 1)->where('duration_id', 1)->get();
+        $spaces = Space::where('horario_id', 1)->where('duration_id', 1)
+        ->orderby('start_hour', 'ASC')
+        ->get();
         return view('admin.spaces.index', compact('spaces'));
     }
 
