@@ -19,7 +19,7 @@ class VehicleResource extends JsonResource
             'id' => $this->id,
             'plate' => $this->plate,
             'color' => $this->color->name,
-            'modelcar' => $this->modelcar->name,
+            'model' => $this->modelcar->name,
             'mark' => $this->modelcar->mark->name,
             'client' => $this->client->name." ".$this->client->last_name,
             'client_id' => $this->client_id
