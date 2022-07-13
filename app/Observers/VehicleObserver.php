@@ -12,5 +12,5 @@ class VehicleObserver
 
             $vehicle->client_id = auth()->user()->id;
         }
-    }
+    } 
 }

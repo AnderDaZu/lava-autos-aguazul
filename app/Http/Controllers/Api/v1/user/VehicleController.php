@@ -66,7 +66,11 @@ class VehicleController extends Controller
             'modelcar_id' => 'required|exists:modelcars,id'
         ]);
 
-        $vehicle = Vehicle::create($request->only('plate','color_id','modelcar_id','client_id'));
+        $vehicle = Vehicle::create([
+            'plate' => $request['plate'],
+            'color_id' => $request['color_id'],
+            'modelcar_id' => $request['modelcar_id']
+        ]);
 
         return response()->json([
             'success' => true,
