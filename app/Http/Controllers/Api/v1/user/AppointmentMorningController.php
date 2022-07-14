@@ -27,10 +27,20 @@ class AppointmentMorningController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $appointments = Appointment::where('client_id', $user_id)
+        $appointments = Appointment::select('appointments.id', 'appointments.date', 'appointments.hour_start', 'appointments.hour_end', 'users.name', 'users.last_name', 'services.name as service', 'services.price', 'durations.duration', 'states.name as state', 'vehicles.plate', 'marks.name as mark', 'modelcars.name as model', 'tasks.stocktaking')
+            ->join('services', 'services.id', '=', 'appointments.service_id')
+            ->join('durations', 'durations.id', '=', 'services.duration_id')
+            ->join('states', 'states.id', '=', 'appointments.state_id')
+            ->join('users', 'users.id', '=', 'appointments.employee_id')
+            ->join('vehicles', 'vehicles.id', '=', 'appointments.vehicle_id')
+            ->join('modelcars', 'modelcars.id', '=', 'vehicles.modelcar_id')
+            ->join('marks', 'marks.id', '=', 'modelcars.mark_id')
+            ->leftjoin('tasks', 'tasks.appointment_id', '=', 'appointments.id')
+            ->where('appointments.client_id', $user_id)
             ->latest('date')
             ->latest('hour_end')
             ->get();
+
         return response()->json([
             'success' => true,
             "citas" => $appointments
@@ -114,6 +124,11 @@ class AppointmentMorningController extends Controller
                 'message' => "Para agendar citas, hasta mañana desde las 00:00"
             ], 200);
         }
+
+        // $appointmentsVehicle = Appointment::where('vehicle_id', $vehicle->id)
+        // // ->where('date', date('Y-m-d'))
+        // ->get();
+        // return $appointmentsVehicle;
 
         // arreglo donde se agregan los espacios disponibles
         $spaces_available = [];
@@ -382,7 +397,7 @@ class AppointmentMorningController extends Controller
             return response()->json([
                 'success' => true,
                 'response' => 'La cita se creo correctamente', 
-                'appointment' => $appointment
+                // 'appointment' => $appointment
             ], 201);
         
         }else {
