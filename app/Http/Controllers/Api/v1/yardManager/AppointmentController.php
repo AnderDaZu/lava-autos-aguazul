@@ -16,7 +16,7 @@ class AppointmentController extends Controller
     public function index()
     {
         $appointments = Appointment::where('horario_id', 1)
-            ->where('date', date('Y-m-d'))
+            // ->where('date', date('Y-m-d'))
             ->where('state_id', 2)
             // ->latest('')
             ->orderby('id', 'asc')

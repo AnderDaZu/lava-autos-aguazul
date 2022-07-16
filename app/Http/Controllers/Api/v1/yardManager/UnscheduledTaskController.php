@@ -112,7 +112,7 @@ class UnscheduledTaskController extends Controller
             ];
         }
         
-        if ( count($employees) ) {
+        if ( count($employees) >= 1 ) {
             return response()->json([
                 'success' => true,
                 'type' => [
