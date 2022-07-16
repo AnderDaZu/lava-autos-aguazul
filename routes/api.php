@@ -71,6 +71,8 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::apiResource('v1/tasks', TaskController::class)->names('yard.tasks')->only(['index', 'show', 'store', 'update']);
     
+    Route::post('v1/unscheduled-appointments/create', [UnscheduledTaskController::class, 'store']);
+    
     Route::get('v1/unscheduled-appointments', [UnscheduledTaskController::class, 'index']);
 
     Route::get('v1/unscheduled-appointments/types', [UnscheduledTaskController::class, 'types']);
@@ -79,7 +81,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     
     Route::get('v1/unscheduled-appointments/{unscheduledTask}', [UnscheduledTaskController::class, 'show']);
     
-    Route::post('v1/unscheduled-appointments/create', [UnscheduledTaskController::class, 'store']);
 
 });
 
