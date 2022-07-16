@@ -10,7 +10,7 @@ class VehicleObserver
     {
         if (! \App::runningInConsole()) {
 
-            $vehicle->client_id = auth()->user()->id;
+            $vehicle->client_id = auth()->user()->id; 
         }
     } 
 }

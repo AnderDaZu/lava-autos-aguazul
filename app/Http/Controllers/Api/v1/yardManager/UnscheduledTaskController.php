@@ -149,7 +149,7 @@ class UnscheduledTaskController extends Controller
             'stocktaking' => $request->stocktaking,
             'finished' => $time_now,
             'employee_id' => $request->employee_id,
-            'yardManager_id' => auth()->user()->id,
+            // 'yardManager_id' => auth()->user()->id,
             'servicio_id' => $request->servicio_id,
             'type_id' => $request->type_id,
         ]);

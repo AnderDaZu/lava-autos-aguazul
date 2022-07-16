@@ -79,7 +79,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     
     Route::get('v1/unscheduled-appointments/{unscheduledTask}', [UnscheduledTaskController::class, 'show']);
     
-    Route::post('v1/unscheduled-appointments/', [UnscheduledTaskController::class, 'store']);
+    Route::post('v1/unscheduled-appointments', [UnscheduledTaskController::class, 'store']);
 
 });
 
