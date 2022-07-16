@@ -135,7 +135,7 @@ class UnscheduledTaskController extends Controller
         $request->validate([
             'plate' => 'required|string',
             'price' => 'required|integer',
-            'stocktaking' => 'required|string|min:50',
+            'stocktaking' => 'required|string|min:1',
             'employee_id' => 'required|exists:users,id',
             'servicio_id' => 'required|exists:services,id',
             'type_id' => 'required|exists:types,id',
@@ -149,7 +149,7 @@ class UnscheduledTaskController extends Controller
             'stocktaking' => $request->stocktaking,
             'finished' => $time_now,
             'employee_id' => $request->employee_id,
-            // 'yardManager_id' => auth()->user()->id,
+            'yardManager_id' => auth()->user()->id,
             'servicio_id' => $request->servicio_id,
             'type_id' => $request->type_id,
         ]);

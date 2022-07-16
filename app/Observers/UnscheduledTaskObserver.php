@@ -14,8 +14,8 @@ class UnscheduledTaskObserver
      */
     public function creating(UnscheduledTask $unscheduledTask)
     {
-        if (! \App::runningInConsole()) {
-            $unscheduledTask->yardManager_id = auth()->user()->id; 
-        }
+        // if (! \App::runningInConsole()) {
+        //     $unscheduledTask->yardManager_id = auth()->user()->id; 
+        // }
     }
 }
