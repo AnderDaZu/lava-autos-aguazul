@@ -72,7 +72,7 @@ class TaskController extends Controller
     {
         $request->validate([
             'price' => 'required',
-            'stocktaking' => 'required|min:20',
+            'stocktaking' => 'required|min:4',
             'appointment_id' => "required|exists:appointments,id"
         ]);
 
