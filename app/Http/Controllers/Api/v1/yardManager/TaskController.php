@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\v1\yardManager;
 use App\Http\Controllers\Controller;
 use App\Models\Api\v1\Appointment;
 use App\Models\Api\v1\Task;
+use App\Models\Api\v1\UnscheduledTask;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
@@ -29,7 +30,11 @@ class TaskController extends Controller
         // ->join('modelcars', 'modelcars.id', '=', 'vehicles.modelcar_id')
         // ->where('yardManager_id', $yard_id)->latest('id')->latest('id')
         // ->get();
-        $tasks = Task::all();
+        $date = date('Y-m-d H:i:s', strtotime('-2 day', strtotime(date('Y-m-d H:i:s'))));
+        
+        $tasks = Task::where('finished', null)
+        ->where('started', '>=', $date)
+        ->get();
         $data = [];
 
         foreach ($tasks as $task) {
@@ -57,7 +62,7 @@ class TaskController extends Controller
         }else{
             return response()->json([
                 'success' => false,
-                'message' => "Aún no hay servicios iniciados por usted"
+                'message' => "Aún no hay servicios iniciados"
             ], 200);
         }
     }
@@ -132,6 +137,29 @@ class TaskController extends Controller
                 'message' => "Tarea ya se ha finalizadó"
             ], 200);
         }
+    }
+
+    public function listTasks()
+    {
+        // $date = date('Y-m-d H:i:s', strtotime('-2 day', strtotime(date('Y-m-d H:i:s'))));
+
+        // $scheduled = Task::where('started', '>=', $date);
+        // $unscheduled = UnscheduledTask::where('finished', '>=', $date);
+        
+        // $dataScheduled = [];
+        // $dataUnscheduled = [];
+
+        // foreach ($scheduled as $task) {
+        //     $dataScheduled[] = [
+        //         'date' => $task['finished'],
+        //         'service' => $task['']
+        //     ];
+        // }
+
+        // foreach ($unscheduled as $task) {
+            
+        // }
+
     }
 
 }
