@@ -87,6 +87,7 @@ class RoleSeeder extends Seeder
         // Jefes de patio
 
         Permission::create(['name' => 'yard.appointments.index'])->syncRoles([$role3]);
+        Permission::create(['name' => 'yard.tasks-finished'])->syncRoles($role3);
         Permission::create(['name' => 'yard.tasks.index'])->syncRoles($role3);
         Permission::create(['name' => 'yard.tasks.show'])->syncRoles($role3);
         Permission::create(['name' => 'yard.tasks.store'])->syncRoles($role3);
@@ -97,5 +98,13 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'yard.unscheduledtasks.show'])->syncRoles($role3);
         Permission::create(['name' => 'yard.unscheduledtasks.store'])->syncRoles($role3);
         // Permission::create(['name' => ''])->syncRoles();
+
+        
+        // Empleado
+
+        Permission::create(['name' => 'employee.tasks'])->syncRoles($role4);
+        Permission::create(['name' => 'employee.tasks.scheduled'])->syncRoles($role4);
+        Permission::create(['name' => 'employee.tasks.unscheduled'])->syncRoles($role4);
+
     }
 }

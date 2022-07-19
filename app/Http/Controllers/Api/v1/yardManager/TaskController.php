@@ -15,6 +15,7 @@ class TaskController extends Controller
     public function __construct()
     {
         $this->middleware('can:yard.tasks.index')->only('index');
+        $this->middleware('can:yard.tasks-finished')->only('tasksFinished');
         $this->middleware('can:yard.tasks.show')->only('show');
         $this->middleware('can:yard.tasks.store')->only('store');
         $this->middleware('can:yard.tasks.update')->only('update');
@@ -67,6 +68,36 @@ class TaskController extends Controller
         }
     }
 
+    public function tasksFinished()
+    {
+        $date = date('Y-m-d H:i:s', strtotime('-3 day', strtotime(date('Y-m-d H:i:s'))));
+        $scheduled = Task::where('finished', '!=', null)
+        ->where('finished' , '>=', $date)
+        ->get();
+        $data = [];
+        foreach ($scheduled as $task) {
+            $data[] = [
+                'finished' => $task['finished'],
+                'service' => $task->appointment->service->name,
+                'price' => $task['price'],
+                'plate' => $task->appointment->vehicle->plate,
+                'model' => $task->appointment->vehicle->modelcar->name,
+                'mark' => $task->appointment->vehicle->modelcar->mark->name,
+            ];
+        }
+
+        if (count($data) > 0) {
+            return response()->json([
+                'success' => true,
+                'tasks' => $data
+            ]);
+        }else{
+            return response()->json([
+                'success' => false,
+                'message' => 'No hay servicios agendados ya finalizados.'
+            ]);
+        }
+    }
 
     public function store(Request $request)
     {

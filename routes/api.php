@@ -4,12 +4,12 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Api\PostController;
 use App\Http\Controllers\Api\TestController;
 use App\Http\Controllers\Api\UserController as UserApiV1;
+use App\Http\Controllers\Api\v1\employee\AppointmentController as EmployeeAppointmentController;
 use App\Http\Controllers\Api\v1\user\AppointmentMorningController;
 use App\Http\Controllers\Api\v1\user\VehicleController;
 use App\Http\Controllers\Api\v1\yardManager\AppointmentController;
 use App\Http\Controllers\Api\v1\yardManager\TaskController;
 use App\Http\Controllers\Api\v1\yardManager\UnscheduledTaskController;
-use App\Http\Controllers\Api\v1\yardManager\VehicleController as YardManagerVehicleController;
 use Illuminate\Support\Facades\Route; 
 
 /*
@@ -71,6 +71,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::apiResource('v1/tasks', TaskController::class)->names('yard.tasks')->only(['index', 'show', 'store', 'update']);
     
+    Route::get('v1/tasks-scheduled', [TaskController::class, 'tasksFinished']);
+
+    // Route::get('v1/tasks-finished', TaskController::class)->name('yard.tasks-finished');
+
     Route::post('v1/unscheduled-appointments/create', [UnscheduledTaskController::class, 'store']);
     
     Route::get('v1/unscheduled-appointments', [UnscheduledTaskController::class, 'index']);
@@ -80,6 +84,14 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::get('v1/unscheduled-appointments/services/{type}', [UnscheduledTaskController::class, 'servicesAndEmployees']);
     
     Route::get('v1/unscheduled-appointments/{unscheduledTask}', [UnscheduledTaskController::class, 'show']);
+    
+    // Empleado
+
+    Route::get('v1/tasks-employee', [EmployeeAppointmentController::class, 'index']);
+    
+    Route::get('v1/scheduled-employee', [EmployeeAppointmentController::class, 'scheduled']);
+    
+    Route::get('v1/unscheduled-employee', [EmployeeAppointmentController::class, 'unscheduled']);
     
 
 });
