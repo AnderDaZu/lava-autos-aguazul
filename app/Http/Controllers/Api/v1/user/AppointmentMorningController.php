@@ -205,8 +205,8 @@ class AppointmentMorningController extends Controller
 
     public function checkEmployees(Vehicle $vehicle, Service $service, Space $space)
     {
-        // $today = date('Y-m-d');
-        $today = date('Y-m-d', strtotime('2022-07-16'));
+        $today = date('Y-m-d');
+        // $today = date('Y-m-d', strtotime('2022-07-16'));
         // $hour_now = date('H:i:s');
         $hour_now = date('H:i:s', strtotime('08:00:00'));
 
@@ -315,8 +315,8 @@ class AppointmentMorningController extends Controller
             'employee_id' => 'required|exists:users,id',
         ]);
 
-        // $today = date('Y-m-d');
-        $today = date('Y-m-d', strtotime('2022-07-16'));
+        $today = date('Y-m-d');
+        // $today = date('Y-m-d', strtotime('2022-07-16'));
         // $hour_now = date('H:i:s');
         $hour_now = date('H:i:s', strtotime('08:00:00'));
         $available = date('H:i:s', strtotime('+10 minute', strtotime($hour_now)));
