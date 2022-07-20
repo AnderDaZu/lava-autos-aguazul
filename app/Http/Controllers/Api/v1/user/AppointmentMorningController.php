@@ -72,8 +72,8 @@ class AppointmentMorningController extends Controller
 
     public function listServices(Vehicle $vehicle)
     {
-        // $hour_now = date('H:i:s');
-        $hour_now = date('H:i:s', strtotime('08:00:00'));
+        $hour_now = date('H:i:s');
+        // $hour_now = date('H:i:s', strtotime('08:00:00'));
         // $available = date('H:i:s', strtotime('+10 minute', strtotime('23:44:00')));
         $available = date('H:i', strtotime('+10 minute', strtotime($hour_now)));
 
@@ -113,8 +113,8 @@ class AppointmentMorningController extends Controller
     {
         $amounts = Amount::where('active', true)->first();
 
-        // $hour_now = date('H:i:s');
-        $hour_now = date('H:i:s', strtotime('08:00:00'));
+        $hour_now = date('H:i:s');
+        // $hour_now = date('H:i:s', strtotime('08:00:00'));
         // $available = date('H:i:s', strtotime('+10 minute', strtotime('23:44:00')));
         $available = date('H:i', strtotime('+10 minute', strtotime(date($hour_now))));
 
@@ -207,8 +207,8 @@ class AppointmentMorningController extends Controller
     {
         $today = date('Y-m-d');
         // $today = date('Y-m-d', strtotime('2022-07-16'));
-        // $hour_now = date('H:i:s');
-        $hour_now = date('H:i:s', strtotime('08:00:00'));
+        $hour_now = date('H:i:s');
+        // $hour_now = date('H:i:s', strtotime('08:00:00'));
 
         if ( $hour_now > '18:05:00' ) {
             return response()->json([
@@ -317,8 +317,8 @@ class AppointmentMorningController extends Controller
 
         $today = date('Y-m-d');
         // $today = date('Y-m-d', strtotime('2022-07-16'));
-        // $hour_now = date('H:i:s');
-        $hour_now = date('H:i:s', strtotime('08:00:00'));
+        $hour_now = date('H:i:s');
+        // $hour_now = date('H:i:s', strtotime('08:00:00'));
         $available = date('H:i:s', strtotime('+10 minute', strtotime($hour_now)));
         // $available = date('H:i:s', strtotime('+15 minute', strtotime("08:00:00")));
         // $available_date = date('Y-m-d H:i:s', strtotime($available));

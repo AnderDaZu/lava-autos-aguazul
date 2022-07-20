@@ -24,6 +24,8 @@ class UnscheduledTaskController extends Controller
     public function index()
     {
         $yard_id = auth()->user()->id;
+        $date = date('Y-m-d H:i:s', strtotime('-3 day', strtotime(date('Y-m-d H:i:s'))));
+
         // $unscheduledTasks = UnscheduledTask::select('services.name', 'unscheduled_tasks.price', 'unscheduled_tasks.plate', 'users.name', 'users.last_name')
         // ->join('services', 'services.id', '=', 'unscheduled_tasks.servicio_id')
         // ->join('users', 'users.id', '=', 'unscheduled_tasks.employee_id')
@@ -31,12 +33,15 @@ class UnscheduledTaskController extends Controller
         // ->latest('unscheduled_tasks.id')
         // ->get();
 
-        $unscheduledTasks = UnscheduledTask::where('yardManager_id', $yard_id)->get();
+        $unscheduledTasks = UnscheduledTask::where('yardManager_id', $yard_id)
+        ->where('finished', '>=', $date)
+        ->get();
 
         $data = [];
 
         foreach ($unscheduledTasks as $task) {
             $data[] = [
+                'id' => $task->id,
                 'name' => $task->employee->name,
                 'last_name' => $task->employee->last_name,
                 'service' => $task->service->name,
@@ -56,7 +61,7 @@ class UnscheduledTaskController extends Controller
         }else{
             return response()->json([
                 "success" => false,
-                "response" => "Aún no ha registrado servicios completados"
+                "message" => "Aún no ha registrado servicios completados"
             ], 200);
         }
     }

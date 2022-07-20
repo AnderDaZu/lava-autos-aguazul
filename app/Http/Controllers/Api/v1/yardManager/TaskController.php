@@ -77,8 +77,10 @@ class TaskController extends Controller
         $data = [];
         foreach ($scheduled as $task) {
             $data[] = [
+                'id' => $task['id'],
                 'finished' => $task['finished'],
                 'service' => $task->appointment->service->name,
+                'employee' => $task->appointment->employee->name." ".$task->appointment->employee->last_name,
                 'price' => $task['price'],
                 'plate' => $task->appointment->vehicle->plate,
                 'model' => $task->appointment->vehicle->modelcar->name,
