@@ -105,7 +105,7 @@ class AppointmentController extends Controller
             ], 200);
         }else{
             return response()->json([
-                'success' => true,
+                'success' => false,
                 'message' => "No tiene servicios sin cita registrados"
             ], 200);
         }

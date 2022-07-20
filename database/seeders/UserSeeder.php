@@ -101,7 +101,7 @@ class UserSeeder extends Seeder
             'phone' => '3016549159',
             'horario_id' => 1,
             'state_id' => 1,
-            'email' => '   alberto@g.com',
+            'email' => 'alberto@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
         ])->assignRole(['employee']);
@@ -115,7 +115,7 @@ class UserSeeder extends Seeder
             'phone' => '3018619159',
             'horario_id' => 1,
             'state_id' => 1,
-            'email' => '   antonio@g.com',
+            'email' => 'antonio@g.com',
             'email_verified_at' => now(),
             'password' => bcrypt('12345678'),
         ])->assignRole(['employee']);
