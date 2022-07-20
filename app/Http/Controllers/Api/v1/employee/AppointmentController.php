@@ -53,7 +53,6 @@ class AppointmentController extends Controller
             ], 200);
         }
 
-        return $tasks;
     }
 
     public function scheduled()
