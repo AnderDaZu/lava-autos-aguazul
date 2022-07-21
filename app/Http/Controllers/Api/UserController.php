@@ -76,21 +76,30 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        // $validator = Validator::make($request->all(), [
+        //     'user_name' => 'required|unique:users',
+        //     'name' => 'required|string|max:30',
+        //     'last_name' => 'required|string|max:30',
+        //     'email' => 'required|string|email|max:40|unique:users',
+        //     'password' => 'required|string|min:6|confirmed',
+        // ]);
+        
+        $customMessages = [
+            'message' => 'Los datos ingresados son onvalidos',
+            'required' => 'Cuidado!! el campo del :attribute no se admite vacío',
+            'unique' => 'Este :attribute ya existe, ingrese otro',
+            'min' => 'El campo :attribute debe se mayor a 6 digitos',
+            'max' => 'El campo :attribute debe se menor a 30 digitos',
+        ];
+
+        $request->validate([
             'user_name' => 'required|unique:users',
             'name' => 'required|string|max:30',
             'last_name' => 'required|string|max:30',
-            'email' => 'required|string|email|max:40|unique:users',
-            'password' => 'required|string|min:6|confirmed',
-        ]);
+            'email' => 'required|string|email|max:30|unique:users',
+            'password' => 'required|string|min:6',
+        ], $customMessages);
 
-        if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
-        }
-
-        // $lastUser =  User::select('id')->latest('id')->take(1)->get();
-        // $id = $lastUser[0]['id']+1;
-        // return response()->json($id, 200);
         $user = User::create([
             'user_name' => $request->get('user_name'),
             'name' => $request->get('name'),
@@ -102,7 +111,21 @@ class UserController extends Controller
 
         $token = JWTAuth::fromUser($user);
 
-        return response()->json(compact('user', 'token'), 201);
+        $user = [
+            'id' => $user['id'],
+            'user_name' => $user['user_name'],
+            'name' => $user['name'],
+            'last_name' => $user['last_name'],
+            'email' => $user['email'],
+            'state_id' => $user['state_id'],
+            'role' => $user['roles'][0]->name,
+        ];
+
+        return response()->json([
+            'success' => true,
+            'user' => $user,
+            'token' => $token,
+        ], 201);
     }
 
     public function logout()
