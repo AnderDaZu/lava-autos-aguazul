@@ -76,29 +76,36 @@ class UserController extends Controller
 
     public function register(Request $request)
     {
-        // $validator = Validator::make($request->all(), [
-        //     'user_name' => 'required|unique:users',
-        //     'name' => 'required|string|max:30',
-        //     'last_name' => 'required|string|max:30',
-        //     'email' => 'required|string|email|max:40|unique:users',
-        //     'password' => 'required|string|min:6|confirmed',
-        // ]);
-        
         $customMessages = [
-            'message' => 'Los datos ingresados son onvalidos',
             'required' => 'Cuidado!! el campo del :attribute no se admite vacío',
             'unique' => 'Este :attribute ya existe, ingrese otro',
             'min' => 'El campo :attribute debe se mayor a 6 digitos',
             'max' => 'El campo :attribute debe se menor a 30 digitos',
         ];
 
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'user_name' => 'required|unique:users',
             'name' => 'required|string|max:30',
             'last_name' => 'required|string|max:30',
-            'email' => 'required|string|email|max:30|unique:users',
-            'password' => 'required|string|min:6',
+            'email' => 'required|string|email|max:40|unique:users',
+            'password' => 'required|string|min:6|confirmed',
         ], $customMessages);
+
+        if ( $validator->fails() ) {
+            return response()->json([
+                'success' => false,
+                'message' => $validator->errors()->first()
+            ], 200);
+        }
+
+        // $request->validate([
+        //     'user_name' => 'required|unique:users',
+        //     'name' => 'required|string|max:30',
+        //     'last_name' => 'required|string|max:30',
+        //     'email' => 'required|string|email|max:30|unique:users',
+        //     'password' => 'required|string|min:6',
+        // ], $customMessages);
+
 
         $user = User::create([
             'user_name' => $request->get('user_name'),
