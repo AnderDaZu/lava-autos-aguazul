@@ -79,8 +79,8 @@ class UserController extends Controller
         $customMessages = [
             'required' => 'Cuidado!! el campo del :attribute no se admite vacío',
             'unique' => 'Este :attribute ya existe, ingrese otro',
-            'min' => 'El campo :attribute debe se mayor a 6 digitos',
-            'max' => 'El campo :attribute debe se menor a 30 digitos',
+            'min' => 'El campo :attribute debe se mayor a :min digitos',
+            'max' => 'El campo :attribute debe se menor a :max digitos',
         ];
 
         $validator = Validator::make($request->all(), [
@@ -88,7 +88,7 @@ class UserController extends Controller
             'name' => 'required|string|max:30',
             'last_name' => 'required|string|max:30',
             'email' => 'required|string|email|max:40|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ], $customMessages);
 
         if ( $validator->fails() ) {
