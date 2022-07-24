@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Los Coches')
+@section('title', 'Crear Tipo de Vehículo')
 
 @section('content_header')
     <h1>Agregar Tipo de Vehículo</h1>

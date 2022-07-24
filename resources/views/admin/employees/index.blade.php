@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Empleados')
 
 @section('content_header')
     <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.employees.create') }}">Crea Empleado</a>

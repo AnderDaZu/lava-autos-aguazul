@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Los Coches')
+@section('title', 'Crear Empleado')
 
 @section('content_header')
     <h1>Crear Nuevo Empleado</h1>

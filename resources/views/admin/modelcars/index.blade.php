@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Líneas Vehículos')
 
 @section('content_header')
     <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.modelcars.create') }}">Crea Línena de Vehículo</a>

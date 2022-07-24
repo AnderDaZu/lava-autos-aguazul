@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Los Coches')
+@section('title', 'Crear Línea')
 
 @section('content_header')
     <h1>Agregar Línea de Vehículo</h1>

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Jefes de Patio')
 
 @section('content_header')
     <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.yardManagers.create') }}">Crea Jefe de Patio</a>

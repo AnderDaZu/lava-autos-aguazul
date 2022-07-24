@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Citas Agendadas')
 
 @section('content_header')
     {{-- <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.agendas.create') }}">Crear Agenda</a> --}}

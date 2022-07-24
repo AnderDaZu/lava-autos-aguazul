@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Posts')
+@section('title', 'Resumen')
 
 @section('content_header')
     {{-- <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.services.create') }}">Agregar Servicio</a> --}}

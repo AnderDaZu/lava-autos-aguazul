@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Los Coches')
+@section('title', 'Crear Jefe de Patio')
 
 @section('content_header')
     <h1>Crear Jefe de Patio</h1>

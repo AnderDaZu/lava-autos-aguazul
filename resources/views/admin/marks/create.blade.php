@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Los Coches')
+@section('title', 'Crear Marca')
 
 @section('content_header')
     <h1>Agregar Marca de Vehículo</h1>

@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Los Coches')
+@section('title', 'Editar Marca')
 
 @section('content_header')
     <h1>Editar Marca de Vehículo</h1>

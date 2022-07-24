@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Dashboard')
+@section('title', 'Tipos de Vehículos')
 
 @section('content_header')
     <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.types.create') }}">Crea Tipo de Vehículo</a>
