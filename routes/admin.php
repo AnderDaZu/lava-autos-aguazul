@@ -51,9 +51,11 @@ Route::get('result/tasks', [ResultServiceController::class, 'index'])->name('adm
 
 Route::get('result/tasks/{task}', [ResultServiceController::class, 'showTask'])->name('admin.result_task.show');
 
+Route::get('result/unscheduled-tasks/{unscheduled_task}', [ResultServiceController::class,'showUnscheduledTask'])->name('admin.result_unscheduled_task.show');
+
 Route::get('result/unscheduled-tasks', [ResultServiceController::class,'indexUnscheduledTask'])->name('admin.result_unscheduled_tasks');
 
-Route::get('result/unscheduled-tasks/{task}', [ResultServiceController::class,'showUnscheduledTask'])->name('admin.result_unscheduled_task');
+Route::get('result/summary', [ResultServiceController::class, 'summary'])->name('admin.summary');
 
 Route::get('result/employees', [ResultEmployeeController::class, 'index'])->name('admin.result_employees');
 

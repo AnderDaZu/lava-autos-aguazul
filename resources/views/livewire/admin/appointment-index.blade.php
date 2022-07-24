@@ -28,9 +28,9 @@
                     @foreach ($appointments as $appointment)
                         <tr>
                             <td>{{ $appointment->id }}</td>
-                            <td>{{ date('Y/m/d', strtotime($appointment->date)) }}</td>
-                            <td>{{ date('H:i a', strtotime($appointment->hour_start)) }}</td>
-                            <td>{{ date('H:i a', strtotime($appointment->hour_end)) }}</td>
+                            <td>{{ date('d M Y', strtotime($appointment->date)) }}</td>
+                            <td>{{ date('H:i A', strtotime($appointment->hour_start)) }}</td>
+                            <td>{{ date('H:i A', strtotime($appointment->hour_end)) }}</td>
                             <td>{{ $appointment->name." ".$appointment->last_name }}</td>
                             <td>{{ $appointment->service }}</td>
                             <td>

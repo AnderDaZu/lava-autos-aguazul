@@ -29,7 +29,7 @@ class Service extends Model
     }
 
     public function type(){ 
-        return $this->belongsTo(Type::class);
+        return $this->belongsTo(Type::class, 'type_id');
     }
 
     public function appointments(){

@@ -39,11 +39,31 @@ class MarkSeeder extends Seeder
         ]);
 
         Mark::create([
+            'name' => 'Audi'
+        ]);
+
+        Mark::create([
             'name' => 'Volkswagen'
         ]);
 
         Mark::create([
             'name' => 'Suzuki'
+        ]);
+
+        Mark::create([
+            'name' => 'Jeep'
+        ]);
+
+        Mark::create([
+            'name' => 'Honda'
+        ]);
+
+        Mark::create([
+            'name' => 'Ferrari'
+        ]);
+
+        Mark::create([
+            'name' => 'BMW'
         ]);
 
     }

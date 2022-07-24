@@ -13,13 +13,17 @@
             <table class="table table-striped">
                 <thead>
                     <tr>
-                        <th>No. Citas Mes Actual</th>
+                        <th>No. Servicios Mes Actual</th>
                         <th>Servicio más Solicitado</th>
                         <th>Empleado con más Servicio</th>
                     </tr>
                 </thead>
                 <tbody>
-
+                    <tr>
+                        <td>{{ $tasksMonth }}</td>
+                        <td>{{ $tasksService->service }} - {{ $tasksService->type }}, total: {{ $tasksService->total }}</td>
+                        <td>{{ $tasksEmployee->name }} {{ $tasksEmployee->last }}, total: {{ $tasksEmployee->total }}</td>
+                    </tr>
                 </tbody>
             </table>
         </div>
@@ -42,11 +46,11 @@
                 <tbody>
                     @foreach ($tasks as $task)
                         <tr>
-                            <td class="text-center">{{ $task->appointment->date }}</td>
-                            <td class="text-center">{{ date('h:i:s A', strtotime($task->started)) }}</td>
+                            <td class="text-center">{{ date('d M Y', strtotime($task->appointment->date)) }}</td>
+                            <td class="text-center">{{ date('h:i A', strtotime($task->started)) }}</td>
                             <td class="text-center">
                                 @if ( !empty( $task->finished) )
-                                    {{ date('h:i:s A', strtotime($task->finished)) }}
+                                    {{ date('h:i A', strtotime($task->finished)) }}
                                 @else
                                     {{ "-- : -- : --" }}
                                 @endif
@@ -59,11 +63,15 @@
                         </tr>
                     @endforeach
                 </tbody>
+            </table>
+        </div>
+        <div class="card-footer">
+            {{ $tasks->links() }}
         </div>
     </div>
     
 @stop
-
+ 
 @section('css')
    
 @endsection

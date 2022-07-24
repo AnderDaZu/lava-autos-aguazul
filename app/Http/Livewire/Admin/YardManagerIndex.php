@@ -24,7 +24,7 @@ class YardManagerIndex extends Component
         $yardManagers = User::role('yard_manager')
             ->where('name','LIKE','%'.$this->search.'%')
             ->latest('id')
-            ->paginate(10);
+            ->paginate(15);
 
         return view('livewire.admin.yard-manager-index', compact('yardManagers'));
     }

@@ -45,7 +45,7 @@ return [
     |
     */
 
-    'logo' => '<b>Los</b>Coches',
+    'logo' => '<b>LavaAutos</b> Aguazul',
     'logo_img' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
     'logo_img_class' => 'brand-image img-circle elevation-3',
     'logo_img_xl' => null,
@@ -390,6 +390,12 @@ return [
                     'icon' => 'fa-fw fas fa-user-friends',
                     'active' => ['admin/result/employees*'],
                     'route'  => 'admin.result_employees',
+                ],
+                [
+                    'text' => 'Resumen',
+                    'icon' => 'fa-fw fas fa-user-friends',
+                    'active' => ['admin/result/summary*'],
+                    'route'  => 'admin.summary',
                 ]
             ],
         ],

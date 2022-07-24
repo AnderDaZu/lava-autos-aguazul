@@ -4,7 +4,7 @@
 
 @section('content_header')
     {{-- <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.services.create') }}">Agregar Servicio</a> --}}
-    <h1>Detalle de Servicio</h1>
+    <h1>Detalle de Servicio: {{ $data['service'] }}</h1>
 @stop
 
 @section('content')
@@ -16,19 +16,23 @@
                   <div class="col-4 mb-2">
                     <div class="p-3 border bg-light">
                         Inicio
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['start'] }}</p>
+                        <p style="margin-bottom: 0; font-size: 20px">{{ date('d M Y - h:i A', strtotime($data['start'])) }}</p>
                     </div>
                   </div>
                   <div class="col-4 mb-2">
                     <div class="p-3 border bg-light">
                         Finalizo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['finished'] }}</p>
+                        @if ($data['finished'] > '2022-01-01' )
+                          <p style="margin-bottom: 0; font-size: 20px">{{ date('d M Y - h:i A', strtotime($data['finished'])) }}</p> 
+                        @else
+                          <p style="margin-bottom: 0; font-size: 20px">No ha finalizado</p>
+                        @endif
                     </div>
                   </div>
                   <div class="col-4 mb-2">
                     <div class="p-3 border bg-light">
                         Precio
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['price'] }}</p>
+                        <p style="margin-bottom: 0; font-size: 20px">$ {{ $data['price'] }}</p>
                     </div>
                   </div>
                   <div class="col-4 mb-2">

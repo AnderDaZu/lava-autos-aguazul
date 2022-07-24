@@ -1,92 +1,78 @@
 @extends('adminlte::page')
 
-@section('title', 'Posts')
+@section('title', $employee->name." ".$employee->last_name)
 
 @section('content_header')
     {{-- <a class="btn btn-secondary btn-sm float-right" href="{{ route('admin.services.create') }}">Agregar Servicio</a> --}}
-    <h1>Servicios Realizados por {{$employee->name}} {{$employee->last_name}}</h1>
+    <h1>Servicios Realizados por: {{$employee->name}} {{$employee->last_name}}</h1>
 @stop
 
 @section('content')
     
-    <div class="card">
-        <div class="card-body">
-            <div class="container overflow-hidden">
-                {{-- <div class="row gy-5">
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Inicio
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['start'] }}</p>
-                    </div>
+<div class="card">
+  <div class="card-body">
+      <div class="container overflow-hidden">
+          <div class="row gy-5">
+              <div class="col-4 mb-2">
+                  <div class="p-3 border bg-light">
+                      Total Servicios
+                      <p style="margin-bottom: 0; font-size: 20px">{{ $total }}</p> 
                   </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Finalizo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['finished'] }}</p>
-                    </div>
+              </div>
+              <div class="col-4 mb-2">
+                  <div class="p-3 border bg-light">
+                      N° Servicios Ult. 30 Días
+                      <p style="margin-bottom: 0; font-size: 20px">{{ $totalServicesMonth }}</p>
                   </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Precio
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['price'] }}</p>
-                    </div>
+              </div>
+              <div class="col-4 mb-2">
+                  <div class="p-3 border bg-light">
+                    N° Servicios Ult. 7 Días
+                      <p style="margin-bottom: 0; font-size: 20px">{{ $totalServicesDay }}</p>
                   </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Marca Vehículo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['mark'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Línea Vehículo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['model'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Placa Vehículo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['plate'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Color Vehículo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['color'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Tipo Vehículo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['type'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-4 mb-2">
-                    <div class="p-3 border bg-light">
-                        Cliente
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['client'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-6 mb-2">
-                    <div class="p-3 border bg-light">
-                        Empleado
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['employee'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-6 mb-2">
-                    <div class="p-3 border bg-light">
-                        Jefe Patio
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['yard'] }}</p>
-                    </div>
-                  </div>
-                  <div class="col-12 mb-2">
-                    <div class="p-3 border bg-light">
-                        Inventarío del Vehículo
-                        <p style="margin-bottom: 0; font-size: 20px">{{ $data['stocktaking'] }}</p>
-                    </div>
-                  </div>
-              </div> --}}
+              </div>
+            </div>
+          </div>
+      </div>
+  </div>
+
+    @if ($tasksS->count()) 
+        <div class="card">
+          <div class="card-body">
+            <table class="table table-striped table-hover">
+              <thead>
+                <tr>
+                    <th>Servicio</th>
+                    <th>Fecha</th>
+                    <th>Hora</th>
+                    <th>Tipo Vehículo</th>
+                    <th>Placa Vehículo</th>
+                </tr>
+                </thead>
+                <tbody>
+                    @foreach ($tasksS as $task)
+                        <tr>
+                            {{-- <td>{{ $task->id }}</td> --}}
+                            <td>{{ $task->service }}</td>
+                            <td>{{ date('d M Y', strtotime($task->date)) }}</td>
+                            <td>{{ date('h:i A', strtotime($task->date)) }}</td>
+                            {{-- <td>{{ $task->appointment->service->name }}</td> --}}
+                            {{-- <td>{{ date('d M Y', strtotime($task->date)) }}</td>
+                            <td>{{ date('h:i A', strtotime($task->started)) }}</td> --}}
+                            <td>{{ $task->type }}</td>                    
+                            <td>{{ $task->plate }}</td>                    
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+          </div>
+          <div class="card-footer">
+              {{ $tasksS->links() }}
+          </div>
         </div>
-    </div>
-    
+    @else
+        <div class="card-body">
+            No hay servicios registrados en el sistema
+        </div>
+    @endif 
 @stop
