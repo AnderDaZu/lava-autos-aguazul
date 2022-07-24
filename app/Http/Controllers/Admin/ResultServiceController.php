@@ -73,8 +73,8 @@ class ResultServiceController extends Controller
             ->orderBy('total', 'desc')
         ->first();
 
-        $tasksEmployee = UnscheduledTask::groupBy('id', 'name', 'last')
-            ->selectRaw('count(unscheduled_tasks.id) as total, u.id as id, u.name as name, u.last_name as last')
+        $tasksEmployee = UnscheduledTask::groupBy('u.id', 'name', 'last')
+            ->selectRaw('count(unscheduled_tasks.id) as total, u.id, u.name as name, u.last_name as last')
             ->join('users as u', 'u.id', '=', 'unscheduled_tasks.employee_id')
             ->orderBy('total', 'desc')
         ->first();
@@ -96,8 +96,8 @@ class ResultServiceController extends Controller
         
         // Unscheduled Tasks
 
-        $tasksEmployeeU = UnscheduledTask::groupBy('id', 'name', 'last')
-            ->selectRaw('count(unscheduled_tasks.id) as total, u.id as id, u.name as name, u.last_name as last')
+        $tasksEmployeeU = UnscheduledTask::groupBy('u.id', 'name', 'last')
+            ->selectRaw('count(unscheduled_tasks.id) as total, u.id, u.name as name, u.last_name as last')
             ->join('users as u', 'u.id', '=', 'unscheduled_tasks.employee_id')
             ->orderBy('total', 'desc')
         ->take(3)->get();
