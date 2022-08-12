@@ -17,7 +17,7 @@ class MarkIndex extends Component
 
     public function updatingSearch(){
         $this->resetPage();
-    }
+    } 
 
     public function render()
     {

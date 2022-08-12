@@ -47,9 +47,9 @@
 
             </table>
         </div>
-        {{-- <div class="card-footer">
-            {{ $types->links() }}
-        </div> --}}
+        <div class="card-footer">
+            {{ $marks->links() }}
+        </div>
     @else
         <div class="card-body">
             No hay marcas registradas
